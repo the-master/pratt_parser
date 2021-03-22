@@ -143,14 +143,19 @@
     <ClCompile Include="main.c" />
     <ClCompile Include="Operators.c" />
     <ClCompile Include="Parser.c" />
+    <ClCompile Include="TestRunner.c" />
     <ClCompile Include="tokenizer.c" />
+    <ClCompile Include="TokenStreamTest.c" />
+    <ClCompile Include="util.c" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="AbstractSyntaxTree.h" />
     <ClInclude Include="language.h" />
     <ClInclude Include="Operators.h" />
     <ClInclude Include="Parser.h" />
+    <ClInclude Include="TestRunner.h" />
     <ClInclude Include="Tokenizer.h" />
+    <ClInclude Include="util.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

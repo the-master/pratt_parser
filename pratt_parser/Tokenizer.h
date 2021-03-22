@@ -10,6 +10,8 @@ int has_next(TokenStream* tokens);
 TokenStream tokenize(char* source);
 void print_all(TokenStream tokens);
 
-TokenStream new_token_iter();
+TokenStream tokenize_by(TokenStream source, char* token, int discard_token, TokenStream all_tokens);
+
+TokenStream new_TokenStream();
 push(TokenStream* iter, char* token);
 //token_iter tokenise(char* source,char* tokens);

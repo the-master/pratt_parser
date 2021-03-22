@@ -1,6 +1,7 @@
 #include "AbstractSyntaxTree.h"
 #include "language.h"
 #include "Operators.h"
+#include "util.h"
 AbstractSyntaxTree* new_Ast(enum typez type, AbstractSyntaxTree* left, AbstractSyntaxTree* right, char* val) {
 	AbstractSyntaxTree* rv = malloc(sizeof(AbstractSyntaxTree));
 	rv->type = type;
@@ -11,16 +12,51 @@ AbstractSyntaxTree* new_Ast(enum typez type, AbstractSyntaxTree* left, AbstractS
 }
 
 
-void print_Ast(AbstractSyntaxTree* root) {
+void print_Ast_recursive(AbstractSyntaxTree* root) {
 	if (root == 0)
 		return;
 	if (root->type == leaf)
 		printf("%s ", root->val);
 	else
-		printf("%s ",operator_to_string((enum operators)root->val));
-	print_Ast(root->left);
+		printf("%s ", operator_to_string((enum operators)root->val));
+	print_Ast_recursive(root->left);
 	printf(" ");
-	print_Ast(root->right);
-	printf("");
-	
+	print_Ast_recursive(root->right);
+	printf(" ");
+
+}
+void printBT(char* prefix,AbstractSyntaxTree* node, int isLeft,int first)
+{
+	char buff[1000];
+	if (node == 0)
+		return;
+	printf(prefix);
+	if (first) {
+		printf(" %s\n", node->type == leaf ? node->val : operator_to_string((operators)node->val));
+		printBT("   ", node->left, 1,0);
+		printBT("   ", node->right, 0,0);
+		return;
+	}
+
+	printf(isLeft ? "|--" : "\"--");
+
+	// print the value of the node
+	printf(" %s\n",node->type==leaf?node->val:operator_to_string((operators)node->val));
+
+	// enter the next tree level - left and right branch
+	*buff = 0;
+	strcat(buff, prefix);
+	strcat(buff, isLeft ? "|---" : "    ");
+
+	printBT(copy_string(buff), node->left, 1,0);
+	*buff = 0;
+	strcat(buff, prefix);
+	strcat(buff, isLeft ? "|   " : "    ");
+	printBT(copy_string(buff), node->right, 0,0);
+
+}
+void print_Ast(AbstractSyntaxTree* root) {
+	printBT("",root,0,1);
+	print_Ast_recursive(root);
+	printf("\n");
 }

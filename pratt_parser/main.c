@@ -5,42 +5,42 @@
 #include "Tokenizer.h"
 #include "AbstractSyntaxTree.h"
 #include "Operators.h"
+#include "util.h"
 #define _CRT_SECURE_NO_WARNINGS 1
 
-char* copy_string(char* str) { return strcpy(malloc((strlen(str) + 1) * sizeof(char)), str); }
 
 
 
 
 
 
-int eval_Ast(AbstractSyntaxTree* root) {
-	switch (root->type)
-	{
-	case leaf:
-		return atoi(root->val);
-	case node:
-		switch ((int)root->val) {
-		case	plus: return eval_Ast(root->left) + eval_Ast(root->right);
-		case	multiply:  return eval_Ast(root->left) * eval_Ast(root->right);
-		case	minus: return eval_Ast(root->left) - eval_Ast(root->right);
-		case	divide:  return eval_Ast(root->left) / eval_Ast(root->right);
-		case	less:  return eval_Ast(root->left) < eval_Ast(root->right);
-		case	more:  return eval_Ast(root->left) > eval_Ast(root->right);
-		case	equals:  return eval_Ast(root->left) == eval_Ast(root->right);
-		case	assign: return eval_Ast(root->right);
-		}
-			printf("errrrrr");
-	}
-}
+//int eval_Ast(AbstractSyntaxTree* root) {
+//	switch (root->type)
+//	{
+//	case leaf:
+//		return atoi(root->val);
+//	case node:
+//		switch ((int)root->val) {
+//		case	plus: return eval_Ast(root->left) + eval_Ast(root->right);
+//		case	multiply:  return eval_Ast(root->left) * eval_Ast(root->right);
+//		case	minus: return eval_Ast(root->left) - eval_Ast(root->right);
+//		case	divide:  return eval_Ast(root->left) / eval_Ast(root->right);
+//		case	less:  return eval_Ast(root->left) < eval_Ast(root->right);
+//		case	more:  return eval_Ast(root->left) > eval_Ast(root->right);
+//		case	equals:  return eval_Ast(root->left) == eval_Ast(root->right);
+//		case	assign: return eval_Ast(root->right);
+//		}
+//			printf("errrrrr");
+//	}
+//}
 typedef struct {
 	TokenStream keys;
 	TokenStream values;
 }Context;
 Context* new_context() {
 	Context* rv = malloc(sizeof(Context));
-	rv->keys = new_token_iter();
-	rv->values= new_token_iter();
+	rv->keys = new_TokenStream();
+	rv->values= new_TokenStream();
 	return rv;
 }
 int get_value(Context* context, char* key) {
@@ -117,11 +117,11 @@ int eval_Ast2(AbstractSyntaxTree* root,Context* context) {
 
 	}
 }
-void eval_string(char* input) {
-	TokenStream tokens = tokenize(input, space_seperated_operators());
-	AbstractSyntaxTree* tree = parse(&tokens, 0);
-	printf("\t%i\n", eval_Ast(tree));
-}
+//void eval_string(char* input) {
+//	TokenStream tokens = tokenize(input, space_seperated_operators());
+//	AbstractSyntaxTree* tree = parse(&tokens, 0);
+//	printf("\t%i\n", eval_Ast(tree));
+//}
 Context* eval_string2(char* input,Context* context) {
 	TokenStream tokens = tokenize(input, space_seperated_operators());
 	AbstractSyntaxTree* tree = parse(&tokens, 0);
@@ -163,7 +163,7 @@ main(void) {
 	//char* input = copy_string("3==2");
 	//char* input = copy_string("1+2");
 	printf("%s\n", input);
-	eval_string(input);
+	eval_string2(input,new_context());
 	repl2();
 	return 1;
 }
@@ -175,19 +175,19 @@ int should_quit(char* input) { return *input == 'q'; }
 
 void print_quit_message() {	printf("Goodbye and thanks for using my parser.");}
 
-void repl() {
-	printf("\n");
-	char input[1000];
-	while(1) {
-		fgets(input, 1000, stdin);
-		if (should_quit(input))
-			return print_quit_message();
-		if(no_input_detected(input))
-			continue;
-
-		eval_string(input);
-	}
-}
+//void repl() {
+//	printf("\n");
+//	char input[1000];
+//	while(1) {
+//		fgets(input, 1000, stdin);
+//		if (should_quit(input))
+//			return print_quit_message();
+//		if(no_input_detected(input))
+//			continue;
+//
+//		eval_string(input);
+//	}
+//}
 void remove_new_line(char* string) {
 	string[strlen(string) - 1] = 0;
 }

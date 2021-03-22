@@ -1,7 +1,6 @@
 
 #include "Tokenizer.h"
-char* copy_string2(char* str) { return strcpy(malloc((strlen(str) + 1) * sizeof(char)), str); }
-
+#include "util.h"
 char* next(TokenStream* tokens) {
 	if (has_next(tokens))
 		return tokens->tokens[tokens->pos++];
@@ -14,7 +13,7 @@ char* index_of(char* haystack, char* needle) {
 	return strstr(haystack, needle);
 }
 int has_next(TokenStream* tokens) { return tokens->pos < tokens->token_count; }
-TokenStream new_token_iter() {
+TokenStream new_TokenStream() {
 	TokenStream rv;
 	rv.pos = 0;
 	rv.token_count = 0;
@@ -27,7 +26,7 @@ push(TokenStream* iter, char* token) {
 	iter->tokens[iter->token_count - 1] = token;
 }
 TokenStream tokenise(char* source) {
-	TokenStream rv = new_token_iter();
+	TokenStream rv = new_TokenStream();
 	char* token = strtok(source, " ");
 	do {
 		 push(&rv,copy_string(token));
@@ -41,11 +40,22 @@ void print_all(TokenStream tokens) {
 int final_tok(int source_length, char* source_str, char* left_token) {
 	return	 source_length == (left_token - source_str) + strlen(left_token);
 }
- TokenStream tokenize_by(TokenStream source, char* token,int discard_token) {
-	TokenStream rv = new_token_iter();
+contains_token(TokenStream all_tokens,char* str) {
+	while (has_next(&all_tokens)) {
+		if (strcmp(next(&all_tokens), str) == 0)
+			return 1;
+	}
+	return 0;
+}
+ TokenStream tokenize_by(TokenStream source, char* token,int discard_token,TokenStream all_tokens) {
+	TokenStream rv = new_TokenStream();
 	int keep_token;
 	while (has_next(&source)) {
 		char* source_str = next(&source);
+		if (contains_token(all_tokens, source_str)){
+			push(&rv, source_str);
+			continue;
+		}
 		int source_length = strlen(source_str);
 		char* location;
 		char* finder = source_str;
@@ -66,9 +76,10 @@ int final_tok(int source_length, char* source_str, char* left_token) {
 
  TokenStream tokenise2(TokenStream input, TokenStream tokens) {
 	 TokenStream rv = input;
+	 TokenStream all_tokens = tokens;
 	 while (has_next(&tokens)) {
 		 //print_all(rv),printf("\n");
-		 rv = tokenize_by(rv, next(&tokens),0);
+		 rv = tokenize_by(rv, next(&tokens),0,all_tokens);
 		/* printf("\n");
 		 print_all(rv), printf("\n");*/
 	 }
@@ -76,10 +87,10 @@ int final_tok(int source_length, char* source_str, char* left_token) {
  }
  TokenStream scrub_spaces(TokenStream tokens)
  {
-	 return tokenize_by(tokens,copy_string2(" "), 1);
+	 return tokenize_by(tokens,copy_string(" "), 1,new_TokenStream());
  }
  TokenStream tokenize(char* input, char* tokens_string) {
-	 TokenStream temp = new_token_iter();
+	 TokenStream temp = new_TokenStream();
 	 push(&temp, input);
 
 	 temp = scrub_spaces(temp);
