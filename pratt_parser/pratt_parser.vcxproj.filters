@@ -24,12 +24,27 @@
     <ClCompile Include="AbstractSyntaxTree.c">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="Operators.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Parser.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Tokenizer.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="AbstractSyntaxTree.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Operators.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Parser.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="blub.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

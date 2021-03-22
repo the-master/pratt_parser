@@ -141,10 +141,15 @@
   <ItemGroup>
     <ClCompile Include="AbstractSyntaxTree.c" />
     <ClCompile Include="main.c" />
+    <ClCompile Include="Operators.c" />
+    <ClCompile Include="Parser.c" />
     <ClCompile Include="tokenizer.c" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="AbstractSyntaxTree.h" />
+    <ClInclude Include="blub.h" />
+    <ClInclude Include="Operators.h" />
+    <ClInclude Include="Parser.h" />
     <ClInclude Include="Tokenizer.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

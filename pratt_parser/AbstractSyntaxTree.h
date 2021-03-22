@@ -1,6 +1,7 @@
 #pragma once
-typedef struct Ast AbstractSyntaxTree;
-typedef struct Ast {
+typedef struct ast AbstractSyntaxTree;
+
+typedef struct ast {
 	enum typez type;
 	AbstractSyntaxTree* left;
 	AbstractSyntaxTree* right;
