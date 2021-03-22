@@ -1,10 +1,7 @@
 
+#include "Tokenizer.h"
 char* copy_string2(char* str) { return strcpy(malloc((strlen(str) + 1) * sizeof(char)), str); }
-typedef struct {
-	int pos;
-	int token_count;
-	char** tokens;
-}TokenStream;
+
 char* next(TokenStream* tokens) {
 	if (has_next(tokens))
 		return tokens->tokens[tokens->pos++];
@@ -37,7 +34,7 @@ TokenStream tokenise(char* source) {
 	} while (token = strtok(0, " "));
 	return rv;
 }
-print_all(TokenStream tokens) {
+void print_all(TokenStream tokens) {
 	while (has_next(&tokens))
 		printf("%s, ",next(&tokens));
 }
@@ -59,7 +56,7 @@ int final_tok(int source_length, char* source_str, char* left_token) {
 			if (!discard_token)
 				push(&rv, copy_string(token));
 
-			finder = location + 1;
+			finder = location + strlen(token);
 		}
 		if(strlen(finder))
 			push(&rv, copy_string(finder));
@@ -72,8 +69,8 @@ int final_tok(int source_length, char* source_str, char* left_token) {
 	 while (has_next(&tokens)) {
 		 //print_all(rv),printf("\n");
 		 rv = tokenize_by(rv, next(&tokens),0);
-		 //printf("\n");
-		 //print_all(rv), printf("\n");
+		/* printf("\n");
+		 print_all(rv), printf("\n");*/
 	 }
 	 return rv;
  }
