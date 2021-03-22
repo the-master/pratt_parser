@@ -147,7 +147,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="AbstractSyntaxTree.h" />
-    <ClInclude Include="blub.h" />
+    <ClInclude Include="language.h" />
     <ClInclude Include="Operators.h" />
     <ClInclude Include="Parser.h" />
     <ClInclude Include="Tokenizer.h" />

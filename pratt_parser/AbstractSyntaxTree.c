@@ -1,5 +1,5 @@
 #include "AbstractSyntaxTree.h"
-#include "blub.h"
+#include "language.h"
 #include "Operators.h"
 AbstractSyntaxTree* new_Ast(enum typez type, AbstractSyntaxTree* left, AbstractSyntaxTree* right, char* val) {
 	AbstractSyntaxTree* rv = malloc(sizeof(AbstractSyntaxTree));
@@ -14,7 +14,7 @@ AbstractSyntaxTree* new_Ast(enum typez type, AbstractSyntaxTree* left, AbstractS
 void print_Ast(AbstractSyntaxTree* root) {
 	if (root == 0)
 		return;
-	if (root->type == nud)
+	if (root->type == leaf)
 		printf("%s ", root->val);
 	else
 		printf("%s ",operator_to_string((enum operators)root->val));

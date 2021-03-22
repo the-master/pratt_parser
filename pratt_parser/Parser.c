@@ -15,11 +15,11 @@ AbstractSyntaxTree* nud_create(char* arg, TokenStream* tokens) {
 		return rv;
 	}
 
-	return new_Ast(nud, 0, 0, arg);
+	return new_Ast(leaf, 0, 0, arg);
 }
 AbstractSyntaxTree* led_create(AbstractSyntaxTree* left, char* v, TokenStream* tokens, int binding_power) {
 
-	AbstractSyntaxTree* rv = new_Ast(led, left, parse(tokens, binding_power), (char*)string_to_operator(v));
+	AbstractSyntaxTree* rv = new_Ast(node, left, parse(tokens, binding_power), (char*)string_to_operator(v));
 
 	return rv;
 }

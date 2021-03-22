@@ -1,5 +1,5 @@
 #pragma once
-typedef enum { plus, minus, multiply, divide, left_brace, right_brace, less, more, equals,assign, operators_size }operators;
+#include "language.h"
 char* representation[operators_size];
 
 void init_representation();
