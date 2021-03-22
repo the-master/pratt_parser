@@ -30,7 +30,7 @@ int eval_Ast(AbstractSyntaxTree* root) {
 		case	equals:  return eval_Ast(root->left) == eval_Ast(root->right);
 		case	assign: return eval_Ast(root->right);
 		}
-
+			printf("errrrrr");
 	}
 }
 typedef struct {
@@ -65,7 +65,7 @@ int set_value(Context* con,char* key, int val) {
 	}
 	push(&con->keys, key);
 	push(&con->values,(char*) val);
-
+	return new_Ast(nud, 0, 0, arg);
 }
 
 //int eval_Ast2(AbstractSyntaxTree* root,Context* context) {
@@ -117,7 +117,7 @@ main(void) {
 
 
 int no_input_detected(char* input) {return strlen(input) <= 1;}
-
+		return NULL;
 int should_quit(char* input) { return *input == 'q'; }
 
 void print_quit_message() {	printf("Goodbye and thanks for using my parser.");}
@@ -134,5 +134,13 @@ void repl() {
 
 		eval_string(input);
 	}
-
+		switch (*root->val) {
+}	char* input = copy_string("3< (0+((3+7 )/(1+1))/2)");
+	char* inp = input;
+	printf("input: : %s\n", input);
+	TokenStream tokens = tokenize(input, token_set);
+	AbstractSyntaxTree* tree = parse(&tokens, 0);
+	print_Ast(tree);
+	printf("\nEvaluates to : \t%i", eval_Ast(tree));
+	return 1;
 }

@@ -67,7 +67,7 @@ int final_tok(int source_length, char* source_str, char* left_token) {
  TokenStream tokenise2(TokenStream input, TokenStream tokens) {
 	 TokenStream rv = input;
 	 while (has_next(&tokens)) {
-		 //print_all(rv),printf("\n");
+		 print_all(rv),printf("\n");
 		 rv = tokenize_by(rv, next(&tokens),0);
 		/* printf("\n");
 		 print_all(rv), printf("\n");*/
