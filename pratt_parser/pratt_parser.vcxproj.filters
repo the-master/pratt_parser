@@ -25,12 +25,15 @@
     <Filter Include="Source Files\test">
       <UniqueIdentifier>{0bfa6a5d-1e55-4304-a646-c0739429b2a7}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Source Files\repl">
+      <UniqueIdentifier>{88741e9b-0de1-49c0-9789-129564c4a20a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\repl">
+      <UniqueIdentifier>{afa332cb-f8fd-494b-921a-506dee1abd3a}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="AbstractSyntaxTree.c">
-      <Filter>Source Files\core</Filter>
-    </ClCompile>
-    <ClCompile Include="main.c">
       <Filter>Source Files\core</Filter>
     </ClCompile>
     <ClCompile Include="Operators.c">
@@ -48,7 +51,34 @@
     <ClCompile Include="TokenStreamTest.c">
       <Filter>Source Files\test</Filter>
     </ClCompile>
+    <ClCompile Include="TestCollector.c">
+      <Filter>Source Files\test</Filter>
+    </ClCompile>
+    <ClCompile Include="TestRunnerTest.c">
+      <Filter>Source Files\test</Filter>
+    </ClCompile>
+    <ClCompile Include="Context.c">
+      <Filter>Source Files\core</Filter>
+    </ClCompile>
+    <ClCompile Include="ContextTest.c">
+      <Filter>Source Files\test</Filter>
+    </ClCompile>
+    <ClCompile Include="eval.c">
+      <Filter>Source Files\core</Filter>
+    </ClCompile>
+    <ClCompile Include="utilTest.c">
+      <Filter>Source Files\test</Filter>
+    </ClCompile>
+    <ClCompile Include="ParserTest.c">
+      <Filter>Source Files\test</Filter>
+    </ClCompile>
+    <ClCompile Include="repl.c">
+      <Filter>Source Files\repl</Filter>
+    </ClCompile>
     <ClCompile Include="util.c">
+      <Filter>Source Files\core</Filter>
+    </ClCompile>
+    <ClCompile Include="main.c">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
@@ -73,6 +103,30 @@
     </ClInclude>
     <ClInclude Include="util.h">
       <Filter>Header Files\core</Filter>
+    </ClInclude>
+    <ClInclude Include="TokenStreamTest.h">
+      <Filter>Header Files\test</Filter>
+    </ClInclude>
+    <ClInclude Include="TestCollector.h">
+      <Filter>Header Files\test</Filter>
+    </ClInclude>
+    <ClInclude Include="TestRunnerTest.h">
+      <Filter>Header Files\test</Filter>
+    </ClInclude>
+    <ClInclude Include="Context.h">
+      <Filter>Header Files\core</Filter>
+    </ClInclude>
+    <ClInclude Include="ContextTest.h">
+      <Filter>Header Files\test</Filter>
+    </ClInclude>
+    <ClInclude Include="eval.h">
+      <Filter>Header Files\core</Filter>
+    </ClInclude>
+    <ClInclude Include="utilTest.h">
+      <Filter>Header Files\test</Filter>
+    </ClInclude>
+    <ClInclude Include="repl.h">
+      <Filter>Header Files\repl</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

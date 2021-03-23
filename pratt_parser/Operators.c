@@ -2,6 +2,7 @@
 #include "Operators.h"
 char* representation[operators_size];
 int binding_pow[operators_size];
+
 void init_representation() {
 	representation[plus] = "+";
 	representation[minus] = "-";
@@ -14,6 +15,8 @@ void init_representation() {
 	representation[equals] = "==";
 	representation[assign] = ":=";
 }
+
+
 char* operator_to_string(enum operators op) {
 	return representation[op];
 }
@@ -52,4 +55,10 @@ char* space_seperated_operators() {
 		strcat(rv, " ");
 	}
 	return rv;
+}
+
+
+void init_operator_module() {
+	init_representation();
+	init_binding_pow();
 }

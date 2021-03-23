@@ -1,19 +1,27 @@
 #pragma once
 #include <stdarg.h>
-typedef enum {equals_int,equals_string  }test_type;
+#include <limits.h>
+
+#define register_tests(...) _register_tests(__FILE__,sizeof((void*[]) {__VA_ARGS__}) / sizeof(void*), __VA_ARGS__)
+#define name_test() _name(__func__)
+typedef enum {equals_int,equals_string ,not_equals_string,not_equals_int}test_type;
 typedef struct {
+	void (*test)();
 	char* name;
 	int succes;
 	char* explanation;
 }Test;
 typedef struct {
-	Test* tests;
-}TestRunner;
-typedef struct {
-	Test executed[1000];
+	char* name;
+	Test tests[1000];
 	int n;
-}TestReport;
-void register_tests(int n, ...);
-void name(char*);
-void print_test_report();
+}TestSet;
+typedef struct {
+	TestSet tests[1000];
+	int n;
+}TestRunner;
+void _register_tests(char* name,int n , ...);
+void _name(char*);
+void assert(test_type t,...);
 void print_test(Test test);
+void run_tests();

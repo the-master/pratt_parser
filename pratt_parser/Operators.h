@@ -2,8 +2,8 @@
 #include "language.h"
 char* representation[operators_size];
 
-void init_representation();
-int init_binding_pow();
+void init_operator_module();
+
 int binding_power(char* arg);
 
 char* space_seperated_operators();

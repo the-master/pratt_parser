@@ -1,6 +1,7 @@
 
 #include "Tokenizer.h"
 #include "util.h"
+
 char* next(TokenStream* tokens) {
 	if (has_next(tokens))
 		return tokens->tokens[tokens->pos++];
@@ -9,6 +10,7 @@ char* next(TokenStream* tokens) {
 }
 
 char* peek(TokenStream* tokens) { return tokens->tokens[tokens->pos]; }
+
 char* index_of(char* haystack, char* needle) {
 	return strstr(haystack, needle);
 }

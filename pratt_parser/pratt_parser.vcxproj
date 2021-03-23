@@ -140,22 +140,38 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="AbstractSyntaxTree.c" />
+    <ClCompile Include="Context.c" />
+    <ClCompile Include="ContextTest.c" />
+    <ClCompile Include="eval.c" />
+    <ClCompile Include="ParserTest.c" />
+    <ClCompile Include="repl.c" />
+    <ClCompile Include="TestRunnerTest.c" />
     <ClCompile Include="main.c" />
     <ClCompile Include="Operators.c" />
     <ClCompile Include="Parser.c" />
+    <ClCompile Include="TestCollector.c" />
     <ClCompile Include="TestRunner.c" />
     <ClCompile Include="tokenizer.c" />
     <ClCompile Include="TokenStreamTest.c" />
     <ClCompile Include="util.c" />
+    <ClCompile Include="utilTest.c" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="AbstractSyntaxTree.h" />
+    <ClInclude Include="Context.h" />
+    <ClInclude Include="ContextTest.h" />
+    <ClInclude Include="eval.h" />
+    <ClInclude Include="repl.h" />
+    <ClInclude Include="TestRunnerTest.h" />
     <ClInclude Include="language.h" />
     <ClInclude Include="Operators.h" />
     <ClInclude Include="Parser.h" />
+    <ClInclude Include="TestCollector.h" />
     <ClInclude Include="TestRunner.h" />
     <ClInclude Include="Tokenizer.h" />
+    <ClInclude Include="TokenStreamTest.h" />
     <ClInclude Include="util.h" />
+    <ClInclude Include="utilTest.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
