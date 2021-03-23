@@ -45,9 +45,6 @@
     <ClCompile Include="tokenizer.c">
       <Filter>Source Files\core</Filter>
     </ClCompile>
-    <ClCompile Include="TestRunner.c">
-      <Filter>Source Files\test</Filter>
-    </ClCompile>
     <ClCompile Include="TokenStreamTest.c">
       <Filter>Source Files\test</Filter>
     </ClCompile>
@@ -81,6 +78,9 @@
     <ClCompile Include="main.c">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="Testing.c">
+      <Filter>Source Files\test</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="AbstractSyntaxTree.h">
@@ -98,35 +98,23 @@
     <ClInclude Include="Tokenizer.h">
       <Filter>Header Files\core</Filter>
     </ClInclude>
-    <ClInclude Include="TestRunner.h">
-      <Filter>Header Files\test</Filter>
-    </ClInclude>
     <ClInclude Include="util.h">
       <Filter>Header Files\core</Filter>
     </ClInclude>
-    <ClInclude Include="TokenStreamTest.h">
-      <Filter>Header Files\test</Filter>
-    </ClInclude>
     <ClInclude Include="TestCollector.h">
-      <Filter>Header Files\test</Filter>
-    </ClInclude>
-    <ClInclude Include="TestRunnerTest.h">
       <Filter>Header Files\test</Filter>
     </ClInclude>
     <ClInclude Include="Context.h">
       <Filter>Header Files\core</Filter>
     </ClInclude>
-    <ClInclude Include="ContextTest.h">
-      <Filter>Header Files\test</Filter>
-    </ClInclude>
     <ClInclude Include="eval.h">
       <Filter>Header Files\core</Filter>
     </ClInclude>
-    <ClInclude Include="utilTest.h">
-      <Filter>Header Files\test</Filter>
-    </ClInclude>
     <ClInclude Include="repl.h">
       <Filter>Header Files\repl</Filter>
+    </ClInclude>
+    <ClInclude Include="Testing.h">
+      <Filter>Header Files\test</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

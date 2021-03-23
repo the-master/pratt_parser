@@ -1,5 +1,5 @@
 #include "util.h"
-#include "TestRunner.h"
+#include "Testing.h"
 void test_assignment2() {
 	name_test();
 	assert(equals_int, 1, 1);

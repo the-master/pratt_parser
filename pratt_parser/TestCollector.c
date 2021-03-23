@@ -1,9 +1,7 @@
-#include "TokenStreamTest.h"
-#include "TestRunnerTest.h"
-#include "ContextTest.h"
+#include "TestCollector.h"
 void prepare_tests() {
 	tests_TokenStream();
-	test_framework();
+	tests_framework();
 	tests_parser();
 	tests_context();
 }

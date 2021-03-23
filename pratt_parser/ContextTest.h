@@ -1,3 +1,3 @@
 #pragma once
 
-void tests_parser();
+void tests_context();

@@ -150,7 +150,7 @@
     <ClCompile Include="Operators.c" />
     <ClCompile Include="Parser.c" />
     <ClCompile Include="TestCollector.c" />
-    <ClCompile Include="TestRunner.c" />
+    <ClCompile Include="Testing.c" />
     <ClCompile Include="tokenizer.c" />
     <ClCompile Include="TokenStreamTest.c" />
     <ClCompile Include="util.c" />
@@ -159,19 +159,15 @@
   <ItemGroup>
     <ClInclude Include="AbstractSyntaxTree.h" />
     <ClInclude Include="Context.h" />
-    <ClInclude Include="ContextTest.h" />
     <ClInclude Include="eval.h" />
     <ClInclude Include="repl.h" />
-    <ClInclude Include="TestRunnerTest.h" />
     <ClInclude Include="language.h" />
     <ClInclude Include="Operators.h" />
     <ClInclude Include="Parser.h" />
     <ClInclude Include="TestCollector.h" />
-    <ClInclude Include="TestRunner.h" />
+    <ClInclude Include="Testing.h" />
     <ClInclude Include="Tokenizer.h" />
-    <ClInclude Include="TokenStreamTest.h" />
     <ClInclude Include="util.h" />
-    <ClInclude Include="utilTest.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

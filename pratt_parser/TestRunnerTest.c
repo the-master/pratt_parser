@@ -1,25 +1,25 @@
 #pragma once
-#include "TestRunner.h"
+#include "TestCollector.h"
  void equals_int_test() {
-	register_test();
+	name_test();
 	assert(equals_int, 1, 1);
 }
  void not_equals_int_test() {
-	register_test();
+	 name_test();
 	assert(not_equals_int, 1, 2);
 }
  void equals_string_test() {
-	register_test();
+	 name_test();
 	assert(equals_string, "bblub","bblub");
 }
  void not_equals_string_test() {
-	 register_test();
+	 name_test();
 	 assert(not_equals_string, "blub", "blob");
  }
  
 
 
-void test_framework() {
+void tests_framework() {
 	register_tests(
 		&equals_int_test,
 		&equals_string_test,

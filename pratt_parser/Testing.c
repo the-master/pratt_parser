@@ -1,11 +1,21 @@
 #pragma once
 #include <stdio.h>
 #include <string.h>
-#include "TestRunner.h"
+#include "Testing.h"
+
+typedef struct Test {void (*test)();	char* name;	int succes;	char* explanation;}	Test;
+
+typedef struct TestFile { char* name;	Test tests[1000]; int n; }TestFile;
+
+ static struct {
+	TestFile tests[1000];
+	int n;
+}all_tests;
+
 static char* current_name;
 static char* current_explenation;
 static int current_succes;
-static TestRunner all_tests;
+//static TestFramework all_tests;
 init_test_module() {
 	all_tests.n = 0;
 	current_succes = 0;
@@ -104,8 +114,9 @@ void run_tests() {
 		int aggregate_succes = 1;
 		for (int j = 0; j < all_tests.tests[i].n; j++) {
 			current_explenation = "no asserts were called";
+			current_name = 0;
 			all_tests.tests[i].tests[j].test();
-			all_tests.tests[i].tests[j].name = current_name;
+			all_tests.tests[i].tests[j].name = current_name==0?"use name_test() at the start of your test function to have it appear here":current_name;
 			all_tests.tests[i].tests[j].succes = current_succes;
 			aggregate_succes &= current_succes;
 			if( current_succes == 0)

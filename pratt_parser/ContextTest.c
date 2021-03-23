@@ -1,5 +1,5 @@
+#include "TestCollector.h"
 #include "Context.h"
-#include "TestRunner.h"
 #include "util.h"
 #include "eval.h"
 void test_assignment() {

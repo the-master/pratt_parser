@@ -60,18 +60,18 @@ contains_token(TokenStream all_tokens,char* str) {
 		}
 		int source_length = strlen(source_str);
 		char* location;
-		char* finder = source_str;
-		while (location = index_of(finder, token)) {
+		char* probe = source_str;
+		while (location = index_of(probe, token)) {
 			*location = 0;
-			if (*finder)
-				push(&rv, copy_string(finder));
+			if (*probe)
+				push(&rv, copy_string(probe));
 			if (!discard_token)
 				push(&rv, copy_string(token));
 
-			finder = location + strlen(token);
+			probe = location + strlen(token);
 		}
-		if(strlen(finder))
-			push(&rv, copy_string(finder));
+		if(strlen(probe))
+			push(&rv, copy_string(probe));
 	}
 	return rv;
 }

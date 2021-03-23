@@ -1,9 +1,9 @@
-#include "TestRunner.h"
+#include "TestCollector.h"
 #include "Tokenizer.h"
 #include "util.h"
 
-void add_many() {
-	register_test(__func__);
+static void add_many() {
+	name_test();
 	TokenStream stream = new_TokenStream();
 	char buffer[100];
 	int i = 1000;
@@ -14,8 +14,8 @@ void add_many() {
 	//	assert(equals_string,2,next(&stream), copy_string(itoa(i--, buffer, 10)));
 	assert(equals_int, 3, 4);
 }
-void size_test() {
-	register_test(__func__);
+static void size_test() {
+	name_test();
 	TokenStream stream = new_TokenStream();
 	char buffer[100];
 	int i = 1000;
@@ -24,8 +24,8 @@ void size_test() {
 	assert(equals_int, stream.token_count, 1000);
 }
 
-void size_test2() {
-	register_test(__func__);
+static void size_test2() {
+	name_test();
 	TokenStream stream = new_TokenStream();
 	char buffer[100];
 	int i = 1000;
