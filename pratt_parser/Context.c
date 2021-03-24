@@ -1,7 +1,11 @@
+#include <stdlib.h>
+#include <string.h>
+#include <stdio.h>
+#include "Tokenizer.h"
 #include "Context.h"
-
-Context* new_context() {
-	Context* rv = malloc(sizeof(Context));
+#include "util.h"
+Context* new_context(void) {
+	Context* rv = exit_on_null( malloc( sizeof(Context)));
 	rv->keys = new_TokenStream();
 	rv->values = new_TokenStream();
 	return rv;
@@ -15,6 +19,7 @@ int get_value(Context* context, char* key) {
 		if (strcmp(key, current_key) == 0)
 			return (int)values.tokens[values.pos - 1];
 	}
+	return -420;
 }
 
 int has_key(Context* context, char* key) {
@@ -28,15 +33,14 @@ int has_key(Context* context, char* key) {
 }
 
 int set_value(Context* con, char* key, int val) {
-	printf("settinf value: %i", val);
 	TokenStream keys = con->keys;
-	TokenStream values = con->keys;
+	TokenStream values = con->values;
 
 	while (has_next(&keys)) {
 		char* current_key = next(&keys);
 		next(&values);
 		if (strcmp(key, current_key) == 0)
-			return (int)values.tokens[values.pos - 1] = (char*)val;
+			return (int) (values.tokens[values.pos - 1] = (char*) val);
 	}
 	push(&con->keys, key);
 	push(&con->values, (char*)val);
@@ -47,7 +51,6 @@ void print_context(Context* c) {
 	TokenStream keys = c->keys;
 	TokenStream values = c->values;
 	while (has_next(&keys)) {
-		printf("%s: %i\n", next(&keys), next(&values));
+		printf("%s: %i\n", next(&keys), (int)next(&values));
 	}
-	return 0;
 }

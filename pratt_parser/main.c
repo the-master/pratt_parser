@@ -5,9 +5,7 @@
 
 #define _CRT_SECURE_NO_WARNINGS 1
 
-
-
-main(void) {
+int main(void) {
 	init_operator_module();
 	prepare_tests();
 	run_tests();

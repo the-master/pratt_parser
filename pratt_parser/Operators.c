@@ -1,9 +1,11 @@
 #include <string.h>
+#include <stdlib.h>
 #include "Operators.h"
+#include "util.h"
 char* representation[operators_size];
 int binding_pow[operators_size];
 
-void init_representation() {
+void init_representation(void) {
 	representation[plus] = "+";
 	representation[minus] = "-";
 	representation[multiply] = "*";
@@ -13,22 +15,24 @@ void init_representation() {
 	representation[less] = "<";
 	representation[more] = ">";
 	representation[equals] = "==";
-	representation[assign] = ":=";
+	representation[assign] = "=";
+	representation[and] = "&&";
+
 }
 
 
-char* operator_to_string(enum operators op) {
+char* operator_to_string(operators op) {
 	return representation[op];
 }
 operators string_to_operator(char* str) {
 	
-	for (int i = 0; i < operators_size ; i++) {
+	for (int i = 0; i < operators_size ; i++) 
 		if (strcmp(str, representation[i]) == 0)
 			return i;
-	}
+	
 	return -1;
 }
-int init_binding_pow() {
+int init_binding_pow(void) {
 	binding_pow[plus] = 20;
 	binding_pow[minus] = 20;
 	binding_pow[multiply] = 30;
@@ -37,6 +41,7 @@ int init_binding_pow() {
 	binding_pow[more] = 16;
 	binding_pow[equals] = 17;
 	binding_pow[assign] = 10;
+	binding_pow[and] = 40;
 	return 1;
 }
 
@@ -46,19 +51,21 @@ int binding_power(char* arg) {
 }
 
 
-char* space_seperated_operators() {
-	char* rv = malloc(operators_size * 3);
+char* space_seperated_operators(void) {
+	char* rv = exit_on_null( malloc(operators_size * 4 ));
 	*rv = 0;
 	for (int i = 0; i < operators_size; i++)
 	{
 		strcat(rv, representation[i]);
 		strcat(rv, " ");
 	}
-	return rv;
+	char* temp = copy_string(rv);
+	free(rv);
+	return temp;
 }
 
 
-void init_operator_module() {
+void init_operator_module(void) {
 	init_representation();
 	init_binding_pow();
 }

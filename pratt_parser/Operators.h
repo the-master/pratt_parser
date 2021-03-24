@@ -1,13 +1,14 @@
 #pragma once
 #include "language.h"
+
 char* representation[operators_size];
 
-void init_operator_module();
+void init_operator_module(void);
 
 int binding_power(char* arg);
 
-char* space_seperated_operators();
+char* space_seperated_operators(void);
 
-char* operator_to_string(enum operators op);
+char* operator_to_string(operators op);
 
-enum operators string_to_operator(char* str);
+operators string_to_operator(char* str);

@@ -1,5 +1,10 @@
 #include "eval.h"
 #include "language.h"
+#include "util.h"
+#include "Operators.h"
+#include "Parser.h"
+#include "stdlib.h"
+#include <stdio.h>
 int eval_Ast2(AbstractSyntaxTree* root, Context* context) {
 	if (root == 0)
 		return printf("evaluating null tree\n"), 0;
@@ -9,7 +14,7 @@ int eval_Ast2(AbstractSyntaxTree* root, Context* context) {
 		if (is_number(root->val))
 			return atoi(root->val);
 		else
-			return get_value(context, root->val);
+			return *root->val=='-'?-get_value(context, root->val+1): get_value(context, root->val);
 	case node:
 		switch ((int)root->val) {
 		case	plus: return eval_Ast2(root->left, context) + eval_Ast2(root->right, context);
@@ -19,10 +24,13 @@ int eval_Ast2(AbstractSyntaxTree* root, Context* context) {
 		case	less:  return eval_Ast2(root->left, context) < eval_Ast2(root->right, context);
 		case	more:  return eval_Ast2(root->left, context) > eval_Ast2(root->right, context);
 		case	equals:  return eval_Ast2(root->left, context) == eval_Ast2(root->right, context);
+		case	and:  return eval_Ast2(root->left, context) && eval_Ast2(root->right, context);
 		case	assign: return root->left ? set_value(context, root->left->val, eval_Ast2(root->right, context)) : -999;
+		case	operators_size: return 0;
 		}
-
 	}
+	printf("errrr something went terribly wrong\n");
+	return -1;
 }
 
 Context* eval_string2(char* input, Context* context) {
