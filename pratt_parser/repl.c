@@ -29,6 +29,6 @@ void repl(void) {
 		if (no_input_detected(input)) 
 			continue;
 		
-		eval_string2(input, context);
+		eval_string(input, context);
 	}
 }

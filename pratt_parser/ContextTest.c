@@ -6,7 +6,7 @@ void test_assignment(void) {
 	name_test();
 	char* input = copy_string("a = 1");
 	Context* context = new_context();
-	eval_string2(input, context);
+	eval_string(input, context);
 	assert(equals_int, get_value(context, "a"), 1);
 }
 void tests_context(void) {
