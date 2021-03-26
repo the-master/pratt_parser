@@ -3,6 +3,7 @@
 #include "Operators.h"
 #include "util.h"
 char* representation[operators_size];
+
 int binding_pow[operators_size];
 
 void init_representation(void) {
@@ -17,22 +18,12 @@ void init_representation(void) {
 	representation[equals] = "==";
 	representation[assign] = "=";
 	representation[and] = "&&";
-
-}
-
-
-char* operator_to_string(operators op) {
-	return representation[op];
-}
-operators string_to_operator(char* str) {
-	
-	for (int i = 0; i < operators_size ; i++) 
-		if (strcmp(str, representation[i]) == 0)
-			return i;
-	
-	return -1;
+	representation[conditional] = "if";
+	representation[loop] = "while";
+	representation[statement_seperator] = ",";
 }
 int init_binding_pow(void) {
+	binding_pow[statement_seperator] = 1;
 	binding_pow[plus] = 20;
 	binding_pow[minus] = 20;
 	binding_pow[multiply] = 30;
@@ -45,6 +36,17 @@ int init_binding_pow(void) {
 	return 1;
 }
 
+operators string_to_operator(char* str) {
+
+	for (int i = 0; i < operators_size; i++)
+		if (strcmp(str, representation[i]) == 0)
+			return i;
+
+	return -1;
+}
+char* operator_to_string(operators op) {
+	return representation[op];
+}
 int binding_power(char* arg) {
 	return binding_pow[string_to_operator(arg)];
 

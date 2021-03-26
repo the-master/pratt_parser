@@ -1,9 +1,8 @@
-
+#include <string.h>
 #include <stdio.h>
 #include "repl.h"
 #include "Context.h"
 #include "eval.h"
-#include "string.h"
 int no_input_detected(char* input) { return strlen(input) <= 1; }
 
 int should_quit(char* input) { return *input == 'q'; }

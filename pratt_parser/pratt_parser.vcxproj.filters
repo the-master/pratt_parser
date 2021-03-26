@@ -33,9 +33,6 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="AbstractSyntaxTree.c">
-      <Filter>Source Files\core</Filter>
-    </ClCompile>
     <ClCompile Include="Operators.c">
       <Filter>Source Files\core</Filter>
     </ClCompile>
@@ -81,11 +78,11 @@
     <ClCompile Include="Testing.c">
       <Filter>Source Files\test</Filter>
     </ClCompile>
+    <ClCompile Include="AbstractSyntaxTree.c">
+      <Filter>Source Files\core</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="AbstractSyntaxTree.h">
-      <Filter>Header Files\core</Filter>
-    </ClInclude>
     <ClInclude Include="language.h">
       <Filter>Header Files\core</Filter>
     </ClInclude>
@@ -115,6 +112,9 @@
     </ClInclude>
     <ClInclude Include="Testing.h">
       <Filter>Header Files\test</Filter>
+    </ClInclude>
+    <ClInclude Include="AbstractSyntaxTree.h">
+      <Filter>Header Files\core</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

@@ -11,6 +11,17 @@ int eval_Ast(AbstractSyntaxTree* root, Context* context) {
 	switch (root->type)
 	{
 	case leaf:
+		if (string_to_operator(root->val) == conditional) {
+			if (eval_Ast(root->left, context))
+				return eval_Ast(root->right,context);
+			return 0;
+		}
+		if (string_to_operator(root->val) == loop) {
+			int rv = 0;
+			while (eval_Ast(root->left, context))
+				rv= eval_Ast(root->right, context);
+			return rv;
+		}
 		if (is_number(root->val))
 			return atoi(root->val);
 		else
@@ -26,6 +37,7 @@ int eval_Ast(AbstractSyntaxTree* root, Context* context) {
 		case	equals:  return eval_Ast(root->left, context) == eval_Ast(root->right, context);
 		case	and:  return eval_Ast(root->left, context) && eval_Ast(root->right, context);
 		case	assign: return root->left ? set_value(context, root->left->val, eval_Ast(root->right, context)) : -999;
+		case	statement_seperator:return eval_Ast(root->left, context), eval_Ast(root->right, context);
 		case	operators_size: return 0;
 		}
 	}

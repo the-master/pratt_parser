@@ -4,6 +4,8 @@
 #include "Tokenizer.h"
 #include "Context.h"
 #include "util.h"
+//UGLY MAP implementation
+//char* to int
 Context* new_context(void) {
 	Context* rv = exit_on_null( malloc( sizeof(Context)));
 	rv->keys = new_TokenStream();

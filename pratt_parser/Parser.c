@@ -9,12 +9,27 @@ void discard_closing_brace(TokenStream* tokens) {
 	else
 		next(tokens);
 }
+
 AbstractSyntaxTree* parse_start_of_expression(char* current_token, TokenStream* tokens) {
-	if (*current_token == '(')
-	{
+	
+	if (*current_token == '('){
 		AbstractSyntaxTree* rv = parse(tokens, binding_power(current_token));
 		discard_closing_brace(tokens);
 		return rv;
+	}
+	if (string_to_operator(current_token) == conditional)
+	{
+		AbstractSyntaxTree* condition = parse(tokens, 0);
+		AbstractSyntaxTree* conditional_epxression = parse(tokens, 0);
+
+		return new_Ast(leaf, condition, conditional_epxression, current_token);
+	}
+	if (string_to_operator(current_token) == loop)
+	{
+		AbstractSyntaxTree* condition = parse(tokens, 0);
+		AbstractSyntaxTree* conditional_epxression = parse(tokens, 0);
+
+		return new_Ast(leaf, condition, conditional_epxression, current_token);
 	}
 
 	return new_Ast(leaf, 0, 0, current_token);
@@ -35,6 +50,7 @@ AbstractSyntaxTree* parse_with_left_expression(AbstractSyntaxTree* left, char* v
 	case	and :
 	case	left_brace:
 	case	right_brace:
+	case	statement_seperator:
 	case	operators_size:
 	default:
 		rv = new_Ast(node, left, parse(tokens, binding_power), (char*)string_to_operator(v));
