@@ -19,3 +19,5 @@ void assert(test_type t,...);
 
 
 void run_tests(void);
+
+void expect_failure(void);

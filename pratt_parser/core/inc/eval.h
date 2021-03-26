@@ -4,4 +4,4 @@
 
 int eval_Ast(AbstractSyntaxTree* root, Context* context);
 
-Context* eval_string(char* input, Context* context);
+Context* eval_string(char* input, Context* context, char* arguments);

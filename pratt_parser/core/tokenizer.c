@@ -8,10 +8,10 @@ char* next(TokenStream* tokens) {
 	if (has_next(tokens))
 		return tokens->tokens[tokens->pos++];
 	else
-		return tokens->tokens[tokens->pos];
+		return tokens->tokens[tokens->pos-1];
 }
 
-char* peek(TokenStream* tokens) { return tokens->tokens[tokens->pos]; }
+char* peek(TokenStream* tokens) { return tokens->tokens[tokens->pos<tokens->token_count?tokens->pos:tokens->pos-1]; }
 
 char* index_of(char* haystack, char* needle) {
 	return strstr(haystack, needle);

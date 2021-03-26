@@ -1,6 +1,6 @@
 #include "util.h"
 #include "Testing.h"
-void test_assignment2(void) {
+static void test_assignment2(void) {
 	name_test();
 	assert(equals_int, 1, 1);
 }

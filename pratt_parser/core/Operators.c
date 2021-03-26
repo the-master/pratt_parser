@@ -18,6 +18,7 @@ void init_representation(void) {
 	representation[equals] = "==";
 	representation[assign] = "=";
 	representation[and] = "&&";
+	representation[or] = "||";
 	representation[conditional] = "if";
 	representation[loop] = "while";
 	representation[statement_seperator] = ",";
@@ -33,6 +34,7 @@ int init_binding_pow(void) {
 	binding_pow[equals] = 17;
 	binding_pow[assign] = 10;
 	binding_pow[and] = 40;
+	binding_pow[or] = 35;
 	return 1;
 }
 

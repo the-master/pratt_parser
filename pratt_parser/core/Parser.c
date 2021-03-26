@@ -1,4 +1,5 @@
 #include <stdio.h>
+#include "util.h"
 #include "AbstractSyntaxTree.h"
 #include "Tokenizer.h"
 #include "Operators.h"
@@ -47,13 +48,20 @@ AbstractSyntaxTree* parse_with_left_expression(AbstractSyntaxTree* left, char* v
 	case	less:
 	case	more:
 	case	equals:
-	case	and :
+	case	and:
+	case	or:
 	case	left_brace:
 	case	right_brace:
 	case	statement_seperator:
 	case	operators_size:
 	default:
 		rv = new_Ast(node, left, parse(tokens, binding_power), (char*)string_to_operator(v));
+		break;
+	case conditional:
+		printf(" %s is not supported with %s as left argument.\n", operator_to_string(conditional),left->val);
+		rv = 0;
+		break;
+
 	}
 	return rv;
 }

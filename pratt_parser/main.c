@@ -2,8 +2,8 @@
 #include "Testing.h"
 #include "TestCollector.h"
 #include "repl.h"
-
-//#define _CRT_SECURE_NO_WARNINGS 1
+//allows itoa
+#define _CRT_SECURE_NO_WARNINGS 1
 /*
 todo:	split tokenicer.c => tokenizer.c & stream.c
 		tests[eval]  [parser][context][ast]

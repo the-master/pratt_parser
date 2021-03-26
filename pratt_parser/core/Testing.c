@@ -17,6 +17,7 @@ typedef struct TestFile { char* name;	Test tests[1000]; int n; }TestFile;
 static char* current_name;
 static char* current_explenation;
 static int current_succes;
+static int expected_succes;
 //static TestFramework all_tests;
 void init_test_module(void) {
 	all_tests.n = 0;
@@ -48,14 +49,14 @@ void _name(char* arg) {
 void assert_string(char* left, char* right) {
 
 	if (strcmp(left, right) == 0) {
-		current_succes = 1;
+		current_succes &= 1;
 		return;
 	}
 	current_explenation = (char*) exit_on_null( malloc(1000 * sizeof(char)));
 	sprintf(current_explenation, "%s is not equal to %s", left, right);
 }
 void assert_int(int x, int y) {
-	current_succes = (x == y);
+	current_succes &= (x == y);
 	if (!current_succes) {
 		current_explenation = (char*)exit_on_null(malloc(1000 * sizeof(char)));
 		sprintf(current_explenation, "%i is not equal to %i", x, y);
@@ -63,21 +64,20 @@ void assert_int(int x, int y) {
 }
 void assert_string_not_equal(char* left, char* right) {
 	if (strcmp(left, right) != 0) {
-		current_succes = 1;
+		current_succes  &= 1;
 		return;
 	}
 	current_explenation = (char*)exit_on_null(malloc(1000 * sizeof(char)));
 	sprintf(current_explenation, "%s is equal to %s", left, right);
 }
 void assert_int_not_equal(int x, int y) {
-	current_succes = (x != y);
+	current_succes &= (x != y);
 	if (!current_succes) {
 		current_explenation = (char*)exit_on_null(malloc(1000 * sizeof(char)));
 		sprintf(current_explenation, "%i is equal to %i", x, y);
 	}
 }
 void assert(test_type type, ...) {
-	current_succes = 0;
 	va_list ap;
 	va_start(ap, type);
 	switch (type) {
@@ -105,7 +105,10 @@ void assert(test_type type, ...) {
 	va_end(ap);
 
 }
-
+void expect_failure(void) {
+	current_succes = 0;
+	expected_succes = 0;
+}
 void run_tests(void) {
 	printf("Starting Tests:\n----------------------------------------------------------------\n");
 	for (int i = 0; i < all_tests.n; i++) {
@@ -114,11 +117,13 @@ void run_tests(void) {
 		for (int j = 0; j < all_tests.tests[i].n; j++) {
 			current_explenation = "no asserts were called";
 			current_name = 0;
+			expected_succes = 1;
+			current_succes = 1;
 			all_tests.tests[i].tests[j].test();
 			all_tests.tests[i].tests[j].name = current_name==0?"use name_test() at the start of your test function to have it appear here":current_name;
-			all_tests.tests[i].tests[j].succes = current_succes;
-			aggregate_succes &= current_succes;
-			if( current_succes == 0)
+			all_tests.tests[i].tests[j].succes = ( current_succes == expected_succes );
+			aggregate_succes &= all_tests.tests[i].tests[j].succes;
+			if(all_tests.tests[i].tests[j].succes == 0)
 				all_tests.tests[i].tests[j].explanation = current_explenation;
 			print_test(all_tests.tests[i].tests[j]);
 		}

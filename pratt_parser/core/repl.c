@@ -28,6 +28,6 @@ void repl(void) {
 		if (no_input_detected(input)) 
 			continue;
 		
-		eval_string(input, context);
+		eval_string(input, context, "v");
 	}
 }
