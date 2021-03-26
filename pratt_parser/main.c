@@ -9,8 +9,6 @@ todo:	split tokenicer.c => tokenizer.c & stream.c
 		tests[eval]  [parser][context][ast]
 
 		add 
-		  *if
-		  *while 
 		  *array
 		  *types
 		  * function
@@ -19,7 +17,7 @@ todo:	split tokenicer.c => tokenizer.c & stream.c
 int main(void) {
 	init_operator_module();
 	prepare_tests();
-	//run_tests();
+	run_tests();
 	repl();
 	return 1;
 }

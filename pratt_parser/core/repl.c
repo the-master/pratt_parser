@@ -3,7 +3,7 @@
 #include "repl.h"
 #include "Context.h"
 #include "eval.h"
-int no_input_detected(char* input) { return strlen(input) <= 1; }
+int no_input_detected(char* input) { return strlen(input) == 0; }
 
 int should_quit(char* input) { return *input == 'q'; }
 

@@ -11,21 +11,20 @@ int eval_Ast(AbstractSyntaxTree* root, Context* context) {
 	switch (root->type)
 	{
 	case leaf:
-		if (string_to_operator(root->val) == conditional) {
-			if (eval_Ast(root->left, context))
-				return eval_Ast(root->right,context);
-			return 0;
-		}
-		if (string_to_operator(root->val) == loop) {
+		switch (string_to_operator(root->val)) {
+		case conditional:return (eval_Ast(root->left, context)) ? eval_Ast(root->right, context) : 0;
+		case loop: {
 			int rv = 0;
 			while (eval_Ast(root->left, context))
-				rv= eval_Ast(root->right, context);
+				rv = eval_Ast(root->right, context);
 			return rv;
 		}
-		if (is_number(root->val))
-			return atoi(root->val);
-		else
-			return *root->val=='-'?-get_value(context, root->val+1): get_value(context, root->val);
+		default:
+			if (is_number(root->val))
+				return atoi(root->val);
+			else
+				return *root->val == '-' ? -get_value(context, root->val + 1) : get_value(context, root->val);
+		}
 	case node:
 		switch ((int)root->val) {
 		case	plus: return eval_Ast(root->left, context) + eval_Ast(root->right, context);

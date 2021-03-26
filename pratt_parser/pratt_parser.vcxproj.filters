@@ -33,87 +33,87 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="Operators.c">
-      <Filter>Source Files\core</Filter>
-    </ClCompile>
-    <ClCompile Include="Parser.c">
-      <Filter>Source Files\core</Filter>
-    </ClCompile>
-    <ClCompile Include="tokenizer.c">
-      <Filter>Source Files\core</Filter>
-    </ClCompile>
-    <ClCompile Include="TokenStreamTest.c">
-      <Filter>Source Files\test</Filter>
-    </ClCompile>
-    <ClCompile Include="TestCollector.c">
-      <Filter>Source Files\test</Filter>
-    </ClCompile>
-    <ClCompile Include="TestRunnerTest.c">
-      <Filter>Source Files\test</Filter>
-    </ClCompile>
-    <ClCompile Include="Context.c">
-      <Filter>Source Files\core</Filter>
-    </ClCompile>
-    <ClCompile Include="ContextTest.c">
-      <Filter>Source Files\test</Filter>
-    </ClCompile>
-    <ClCompile Include="eval.c">
-      <Filter>Source Files\core</Filter>
-    </ClCompile>
-    <ClCompile Include="utilTest.c">
-      <Filter>Source Files\test</Filter>
-    </ClCompile>
-    <ClCompile Include="ParserTest.c">
-      <Filter>Source Files\test</Filter>
-    </ClCompile>
-    <ClCompile Include="repl.c">
-      <Filter>Source Files\repl</Filter>
-    </ClCompile>
-    <ClCompile Include="util.c">
-      <Filter>Source Files\core</Filter>
-    </ClCompile>
     <ClCompile Include="main.c">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Testing.c">
+    <ClCompile Include="core\AbstractSyntaxTree.c">
+      <Filter>Source Files\core</Filter>
+    </ClCompile>
+    <ClCompile Include="core\Context.c">
+      <Filter>Source Files\core</Filter>
+    </ClCompile>
+    <ClCompile Include="core\eval.c">
+      <Filter>Source Files\core</Filter>
+    </ClCompile>
+    <ClCompile Include="core\Operators.c">
+      <Filter>Source Files\core</Filter>
+    </ClCompile>
+    <ClCompile Include="core\Parser.c">
+      <Filter>Source Files\core</Filter>
+    </ClCompile>
+    <ClCompile Include="test\ContextTest.c">
       <Filter>Source Files\test</Filter>
     </ClCompile>
-    <ClCompile Include="AbstractSyntaxTree.c">
+    <ClCompile Include="test\ParserTest.c">
+      <Filter>Source Files\test</Filter>
+    </ClCompile>
+    <ClCompile Include="test\TestCollector.c">
+      <Filter>Source Files\test</Filter>
+    </ClCompile>
+    <ClCompile Include="test\TestRunnerTest.c">
+      <Filter>Source Files\test</Filter>
+    </ClCompile>
+    <ClCompile Include="test\TokenStreamTest.c">
+      <Filter>Source Files\test</Filter>
+    </ClCompile>
+    <ClCompile Include="test\utilTest.c">
+      <Filter>Source Files\test</Filter>
+    </ClCompile>
+    <ClCompile Include="core\Testing.c">
+      <Filter>Source Files\test</Filter>
+    </ClCompile>
+    <ClCompile Include="core\tokenizer.c">
+      <Filter>Source Files\core</Filter>
+    </ClCompile>
+    <ClCompile Include="core\repl.c">
+      <Filter>Source Files\repl</Filter>
+    </ClCompile>
+    <ClCompile Include="util\util.c">
       <Filter>Source Files\core</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="language.h">
+    <ClInclude Include="core\inc\AbstractSyntaxTree.h">
       <Filter>Header Files\core</Filter>
     </ClInclude>
-    <ClInclude Include="Operators.h">
+    <ClInclude Include="core\inc\Context.h">
       <Filter>Header Files\core</Filter>
     </ClInclude>
-    <ClInclude Include="Parser.h">
+    <ClInclude Include="core\inc\eval.h">
       <Filter>Header Files\core</Filter>
     </ClInclude>
-    <ClInclude Include="Tokenizer.h">
+    <ClInclude Include="core\inc\Operators.h">
       <Filter>Header Files\core</Filter>
     </ClInclude>
-    <ClInclude Include="util.h">
+    <ClInclude Include="core\inc\Parser.h">
       <Filter>Header Files\core</Filter>
     </ClInclude>
-    <ClInclude Include="TestCollector.h">
+    <ClInclude Include="core\inc\Tokenizer.h">
+      <Filter>Header Files\core</Filter>
+    </ClInclude>
+    <ClInclude Include="core\inc\Testing.h">
       <Filter>Header Files\test</Filter>
     </ClInclude>
-    <ClInclude Include="Context.h">
-      <Filter>Header Files\core</Filter>
-    </ClInclude>
-    <ClInclude Include="eval.h">
-      <Filter>Header Files\core</Filter>
-    </ClInclude>
-    <ClInclude Include="repl.h">
+    <ClInclude Include="core\inc\repl.h">
       <Filter>Header Files\repl</Filter>
     </ClInclude>
-    <ClInclude Include="Testing.h">
+    <ClInclude Include="core\inc\TestCollector.h">
       <Filter>Header Files\test</Filter>
     </ClInclude>
-    <ClInclude Include="AbstractSyntaxTree.h">
+    <ClInclude Include="core\inc\util.h">
+      <Filter>Header Files\core</Filter>
+    </ClInclude>
+    <ClInclude Include="core\enums\language.h">
       <Filter>Header Files\core</Filter>
     </ClInclude>
   </ItemGroup>

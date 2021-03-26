@@ -88,6 +88,7 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>_CRT_SECURE_NO_WARNINGS;WIN32;_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
+      <AdditionalIncludeDirectories>C:\Users\Suus\Desktop\Dieter\pratt_parser\pratt_parser\pratt_parser\core\inc;C:\Users\Suus\Desktop\Dieter\pratt_parser\pratt_parser\pratt_parser\core\enums;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -139,35 +140,35 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="AbstractSyntaxTree.c" />
-    <ClCompile Include="Context.c" />
-    <ClCompile Include="ContextTest.c" />
-    <ClCompile Include="eval.c" />
-    <ClCompile Include="ParserTest.c" />
-    <ClCompile Include="repl.c" />
-    <ClCompile Include="TestRunnerTest.c" />
+    <ClCompile Include="core\AbstractSyntaxTree.c" />
+    <ClCompile Include="core\Context.c" />
+    <ClCompile Include="test\ContextTest.c" />
+    <ClCompile Include="core\eval.c" />
+    <ClCompile Include="test\ParserTest.c" />
+    <ClCompile Include="core\repl.c" />
+    <ClCompile Include="test\TestRunnerTest.c" />
     <ClCompile Include="main.c" />
-    <ClCompile Include="Operators.c" />
-    <ClCompile Include="Parser.c" />
-    <ClCompile Include="TestCollector.c" />
-    <ClCompile Include="Testing.c" />
-    <ClCompile Include="tokenizer.c" />
-    <ClCompile Include="TokenStreamTest.c" />
-    <ClCompile Include="util.c" />
-    <ClCompile Include="utilTest.c" />
+    <ClCompile Include="core\Operators.c" />
+    <ClCompile Include="core\Parser.c" />
+    <ClCompile Include="test\TestCollector.c" />
+    <ClCompile Include="core\Testing.c" />
+    <ClCompile Include="core\tokenizer.c" />
+    <ClCompile Include="test\TokenStreamTest.c" />
+    <ClCompile Include="util\util.c" />
+    <ClCompile Include="test\utilTest.c" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="AbstractSyntaxTree.h" />
-    <ClInclude Include="Context.h" />
-    <ClInclude Include="eval.h" />
-    <ClInclude Include="repl.h" />
-    <ClInclude Include="language.h" />
-    <ClInclude Include="Operators.h" />
-    <ClInclude Include="Parser.h" />
-    <ClInclude Include="TestCollector.h" />
-    <ClInclude Include="Testing.h" />
-    <ClInclude Include="Tokenizer.h" />
-    <ClInclude Include="util.h" />
+    <ClInclude Include="core\inc\AbstractSyntaxTree.h" />
+    <ClInclude Include="core\inc\Context.h" />
+    <ClInclude Include="core\inc\eval.h" />
+    <ClInclude Include="core\inc\repl.h" />
+    <ClInclude Include="core\enums\language.h" />
+    <ClInclude Include="core\inc\Operators.h" />
+    <ClInclude Include="core\inc\Parser.h" />
+    <ClInclude Include="core\inc\TestCollector.h" />
+    <ClInclude Include="core\inc\Testing.h" />
+    <ClInclude Include="core\inc\Tokenizer.h" />
+    <ClInclude Include="core\inc\util.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
