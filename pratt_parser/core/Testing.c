@@ -9,10 +9,7 @@ typedef struct Test {void (*test)(void);	char* name;	int succes;	char* explanati
 
 typedef struct TestFile { char* name;	Test tests[1000]; int n; }TestFile;
 
- static struct {
-	TestFile tests[1000];
-	int n;
-}all_tests;
+static struct {	TestFile tests[1000];	int n; }all_tests;
 
 static char* current_name;
 static char* current_explenation;
@@ -21,7 +18,6 @@ static int expected_succes;
 //static TestFramework all_tests;
 void init_test_module(void) {
 	all_tests.n = 0;
-	current_succes = 0;
 }
 void print_test(Test test) {
 	if (test.succes)

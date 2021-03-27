@@ -30,7 +30,7 @@ static void test_loop(void) {
 	eval_string(input, context, "");
 	assert(equals_int, get_value(context, "sum"), 5050);
 }
-void tests_parser(void) {
+void tests_Parser_module(void) {
 	register_tests(&test_assignment,
 		&test_assignment_chained,
 		&test_chained_statments,

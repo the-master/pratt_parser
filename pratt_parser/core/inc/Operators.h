@@ -1,7 +1,6 @@
 #pragma once
 #include "language.h"
 
-char* representation[operators_size];
 
 void init_operator_module(void);
 

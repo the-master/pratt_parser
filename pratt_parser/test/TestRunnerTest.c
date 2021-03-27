@@ -1,5 +1,6 @@
 #pragma once
 #include "TestCollector.h"
+
 static void equals_int_test(void) {
 	name_test();
 	assert(equals_int, 1, 1);
@@ -33,7 +34,7 @@ static  void multi_assert_test(void) {
  
 
 
-void tests_framework(void) {
+void tests_Testing_module(void) {
 	register_tests(
 		&equals_int_test,
 		&equals_string_test,
