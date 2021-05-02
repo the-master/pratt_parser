@@ -142,6 +142,8 @@
   <ItemGroup>
     <ClCompile Include="core\AbstractSyntaxTree.c" />
     <ClCompile Include="core\Context.c" />
+    <ClCompile Include="core\FileParser.c" />
+    <ClCompile Include="core\FunctionContext.c" />
     <ClCompile Include="test\ContextTest.c" />
     <ClCompile Include="core\eval.c" />
     <ClCompile Include="test\ParserTest.c" />
@@ -161,6 +163,8 @@
     <ClInclude Include="core\inc\AbstractSyntaxTree.h" />
     <ClInclude Include="core\inc\Context.h" />
     <ClInclude Include="core\inc\eval.h" />
+    <ClInclude Include="core\inc\FileParser.h" />
+    <ClInclude Include="core\inc\FunctionContext.h" />
     <ClInclude Include="core\inc\repl.h" />
     <ClInclude Include="core\enums\language.h" />
     <ClInclude Include="core\inc\Operators.h" />

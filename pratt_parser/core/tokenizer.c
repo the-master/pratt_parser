@@ -83,15 +83,27 @@ int contains_token(TokenStream all_tokens,char* str) {
 	}
 	return rv;
 }
-
+ TokenStream filter_by_lenght(TokenStream input,int len) {
+	 TokenStream rv = new_TokenStream();
+	 char* temp;
+	 while(has_next(&input))
+		 if(strlen(temp=next(&input) )== len)
+			 push(&rv,temp);
+	 return rv;
+ }
  TokenStream tokenise2(TokenStream input, TokenStream tokens) {
 	 TokenStream rv = input;
 	 TokenStream all_tokens = tokens;
-	 while (has_next(&tokens)) {
-		 //print_all(rv),printf("\n");
-		 rv = tokenize_by(rv, next(&tokens),0,all_tokens);
-		/* printf("\n");
-		 print_all(rv), printf("\n");*/
+	 for (int i = 5; i > 0; i--) {
+
+
+		  TokenStream my_tokens = filter_by_lenght(tokens,i);
+		 while (has_next(&my_tokens)) {
+			 //print_all(rv),printf("\n");
+			 rv = tokenize_by(rv, next(&my_tokens), 0, all_tokens);
+			 /* printf("\n");
+			  print_all(rv), printf("\n");*/
+		 }
 	 }
 	 return rv;
  }
@@ -124,6 +136,28 @@ int contains_token(TokenStream all_tokens,char* str) {
 
 	 return rv;
  }
+ TokenStream stitch_function_brace(TokenStream tokenized,  TokenStream all_tokens) {
+	 TokenStream rv = new_TokenStream();
+	 while (has_next(&tokenized)) {
+		 char* current = next(&tokenized);
+		 if (current == 0) {
+			 printf("\n something unexpected happened during tokenization\n");
+			 continue;
+		 }
+		 if(!contains_token(all_tokens, current) && !is_number(current)&& *peek(&tokenized)=='('){
+			 char* next_token = next(&tokenized);
+			 char buff[100];
+			 buff[0] = 0;
+			 strcat(buff, current);
+			 strcat(buff, next_token);
+			 push(&rv, copy_string(buff));
+		 } else
+			push(&rv, copy_string(current));
+
+	 }
+
+	 return rv;
+ }
  TokenStream tokenize(char* input, char* tokens_string) {
 	 TokenStream temp = new_TokenStream();
 	 push(&temp, input);
@@ -132,5 +166,5 @@ int contains_token(TokenStream all_tokens,char* str) {
 
 	 TokenStream tokens = tokenise(tokens_string);
 	 TokenStream tokenized= tokenise2(temp, tokens);
-	 return stitch_minus(tokenized,tokens);
+	 return stitch_function_brace(stitch_minus(tokenized,tokens),tokens);
  }

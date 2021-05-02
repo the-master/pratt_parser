@@ -18,7 +18,7 @@ static void test_assignment_chained(void) {
 }
 static void test_chained_statments(void) {
 	name_test();
-	char* input = copy_string("a =1,b=a+3");
+	char* input = copy_string("x = 0, sum = 0, while (x < 100)(x = x + 1, sum = sum + x), while (x > 0)(x = x - 1)");
 	Context* context = new_context();
 	eval_string(input, context, "");
 	assert(equals_int, get_value(context, "b"), 4);

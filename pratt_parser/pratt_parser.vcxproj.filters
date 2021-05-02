@@ -81,6 +81,12 @@
     <ClCompile Include="util\util.c">
       <Filter>Source Files\core</Filter>
     </ClCompile>
+    <ClCompile Include="core\FunctionContext.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="core\FileParser.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="core\inc\AbstractSyntaxTree.h">
@@ -115,6 +121,12 @@
     </ClInclude>
     <ClInclude Include="core\enums\language.h">
       <Filter>Header Files\core</Filter>
+    </ClInclude>
+    <ClInclude Include="core\inc\FunctionContext.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="core\inc\FileParser.h">
+      <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

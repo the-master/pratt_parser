@@ -3,14 +3,21 @@
 #include "repl.h"
 #include "Context.h"
 #include "eval.h"
-int no_input_detected(char* input) { return strlen(input) == 0; }
+#include "util.h"
+static int no_input_detected(char* input) { return strlen(input) == 0; }
 
-int should_quit(char* input) { return *input == 'q'; }
+static int should_quit(char* input) { return *input == 'q'; }
 
-void print_quit_message(void) { printf("Goodbye and thanks for using my parser."); }
+static void print_quit_message(void) { printf("Goodbye and thanks for using my parser."); }
 
-void remove_new_line(char* string) {
-	string[strlen(string) - 1] = 0;
+static void remove_new_line(char* string) {
+	if(string[strlen(string) - 1]=='\n')
+		string[strlen(string) - 1] = 0;
+}
+static int buffer_overflow_attempt(char* input) {
+	if(strlen(input)==999)
+		return input[999] == 0 && ((input[998] != '\n') || ( input[998] != '\r'));
+	return 0;
 }
 void repl(void) {
 	printf("\nWelcome to the interactive version of my language:\n\ttype any string starting with q to exit \n\n");
@@ -19,6 +26,13 @@ void repl(void) {
 	while (1) {
 		printf(">");
 		fgets(input, 1000, stdin);
+		if (buffer_overflow_attempt(input))
+		{
+			printf("Max input 1000 characters \n");
+			int ch;
+			while ((ch = getchar() != '\n') && (ch != EOF));
+			continue;
+		}
 		if (should_quit(input)) {
 			print_quit_message();
 			return;
@@ -30,4 +44,13 @@ void repl(void) {
 		
 		eval_string(input, context, "v");
 	}
+}
+static int is_empty_line(char line[300]) {
+	for (int i = 0; i < 300; i++)
+	{
+		char c = line[i];
+		if (c != ' ' && c != '\t' && c != '\n')
+			return 0;
+	}
+	return 1;
 }

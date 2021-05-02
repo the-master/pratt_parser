@@ -1,4 +1,4 @@
 #pragma once
 
-typedef enum { node, leaf } typez;
-typedef enum { plus, minus, multiply, divide, left_brace, right_brace, less, more, equals, assign, and, or, conditional,loop,statement_seperator, operators_size }operators;
+typedef enum { with_left_operand, no_left_operand } typez;
+typedef enum { plus, minus, multiply, divide, left_brace, right_brace, less, more, not_equals, equals,leq,geq, assign, and, or, conditional,loop,statement_seperator, operators_size }operators;
