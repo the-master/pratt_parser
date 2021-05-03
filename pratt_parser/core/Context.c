@@ -17,7 +17,7 @@ Context* new_context(void) {
 int get_value(Context* context, char* key) {
 	if (context->up)
 		return get_value((Context*)context->up, key);
-	printf("lookiing up  %s :\n", key);
+	//printf("lookiing up  %s :\n", key);
 	TokenStream keys = context->keys;
 	TokenStream values = context->values;
 	while (has_next(&keys)) {
@@ -26,7 +26,7 @@ int get_value(Context* context, char* key) {
 		if (strcmp(key, current_key) == 0)
 			return (int)values.tokens[values.pos - 1];
 	}
-	print_context(context);
+	//print_context(context);
 	return -420;
 }
 
@@ -43,7 +43,7 @@ int has_key(Context* context, char* key) {
 int set_value(Context* con, char* key, int val) {
 	TokenStream keys = con->keys;
 	TokenStream values = con->values;
-	printf("assigning %i to %s\n", val, key);
+	//printf("assigning %i to %s\n", val, key);
 	while (has_next(&keys)) {
 		char* current_key = next(&keys);
 		next(&values);

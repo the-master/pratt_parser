@@ -13,7 +13,14 @@
 int is_function_token(char* token) {
 	return strlen(token) > 1 && strstr(token, "(") != 0;
 }
+
+
+void inherit_functions(Context* origin, Context* target) {
+	target->functions = origin->functions;
+}
 int eval_Ast(AbstractSyntaxTree* root, Context* context) {
+	//print_Ast(root);
+	//print_context(context);
 	if (root == 0)
 		return printf("evaluating null tree\n"), 0;
 	switch (root->type)
@@ -33,6 +40,7 @@ int eval_Ast(AbstractSyntaxTree* root, Context* context) {
 				return atoi(root->val);
 			else if (is_function_token(root->val)) {
 				Context* function_scope = new_context();
+				inherit_functions(context, function_scope);
 				CCFunction* f = get_fun(context, root->val);
 				function_scope->up = context;
 				if(root->left)
@@ -77,17 +85,10 @@ Context* eval_file(char* file) {
 Context* eval_string(char* input, Context* context,char* arguments) {
 	TokenStream tokens = tokenize(input, space_seperated_operators());
 	AbstractSyntaxTree* tree = parse(&tokens, 0,context,context);
+	print_Ast(tree);
 	int result = eval_Ast(tree, context);
 	if(verbose(arguments))
 		printf("\t%i\n",result);
 	return context;
 }
 
-Context* eval_string2(char* input, Context* context,FunctionContext* fn_context, char* arguments) {
-	TokenStream tokens = tokenize(input, space_seperated_operators());
-	AbstractSyntaxTree* tree = parse(&tokens, 0,context);
-	int result = eval_Ast(tree, context,fn_context);
-	if (verbose(arguments))
-		printf("\t%i\n", result);
-	return context;
-}

@@ -166,5 +166,5 @@ int contains_token(TokenStream all_tokens,char* str) {
 
 	 TokenStream tokens = tokenise(tokens_string);
 	 TokenStream tokenized= tokenise2(temp, tokens);
-	 return stitch_function_brace(stitch_minus(tokenized,tokens),tokens);
+	 return stitch_function_brace(stitch_minus(tokenized, tokens) , tokens);
  }

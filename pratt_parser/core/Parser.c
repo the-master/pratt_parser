@@ -25,7 +25,7 @@ void discard_comma_or_brace(TokenStream* tokens) {
 AbstractSyntaxTree* parse_start_of_expression(char* current_token, TokenStream* tokens, Context* context) {
 	
 	if (*current_token == '('){
-		AbstractSyntaxTree* rv = parse(tokens, binding_power(current_token), context);
+		AbstractSyntaxTree* rv = parse(tokens, 0, context);
 		discard_closing_brace(tokens);
 		return rv;
 	}
@@ -68,14 +68,15 @@ AbstractSyntaxTree* parse_start_of_expression(char* current_token, TokenStream* 
 	if (string_to_operator(current_token) == conditional)
 	{
 		AbstractSyntaxTree* condition = parse(tokens, 0, context);
-		AbstractSyntaxTree* conditional_epxression = parse(tokens, 0, context);
+		AbstractSyntaxTree* conditional_epxression = parse(tokens, 3, context);
 
 		return new_Ast(no_left_operand, condition, conditional_epxression, current_token);
 	}
 	if (string_to_operator(current_token) == loop)
 	{
 		AbstractSyntaxTree* condition = parse(tokens, 0, context);
-		AbstractSyntaxTree* conditional_epxression = parse(tokens, 0, context);
+		
+		AbstractSyntaxTree* conditional_epxression = parse(tokens, 3, context);
 
 		return new_Ast(no_left_operand, condition, conditional_epxression, current_token);
 	}
@@ -119,10 +120,11 @@ AbstractSyntaxTree* parse_with_left_expression(AbstractSyntaxTree* left, char* v
 AbstractSyntaxTree* parse(TokenStream* tokens, int current_binding_power,Context* context) {
 	if (!has_next(tokens))
 		return 0;
-
+	if (*peek(tokens) == ")")
+		printf("blah");
 	AbstractSyntaxTree* left = parse_start_of_expression(next(tokens), tokens, context);
 
-	while (has_next(tokens) && binding_power(peek(tokens)) > current_binding_power)
+	while (has_next(tokens) && binding_power(peek(tokens)) >= current_binding_power)
 		left = parse_with_left_expression(left, next(tokens), tokens, binding_power(peek(tokens)), context);
 
 	return left;

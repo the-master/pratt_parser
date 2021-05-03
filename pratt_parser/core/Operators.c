@@ -28,6 +28,8 @@ void init_representation(void) {
 
 }
 void init_binding_pow(void) {
+	binding_pow[left_brace] = -10;
+	binding_pow[right_brace] = -10;
 	binding_pow[statement_seperator] = 1;
 	binding_pow[assign] = 14;
 	binding_pow[less] = 15;
