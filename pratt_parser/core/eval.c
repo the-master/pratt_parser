@@ -28,7 +28,12 @@ int eval_Ast(AbstractSyntaxTree* root, Context* context) {
 	case no_left_operand:
 		switch (string_to_operator(root->val)) 
 		{
-		case conditional:return (eval_Ast(root->left, context)) ? eval_Ast(root->right, context) : 0;
+		case conditional:
+			if (eval_Ast(root->left, context))
+				return eval_Ast(root->right->left, context);
+			if (root->right->right)
+				return eval_Ast(root->right->right, context);
+			return 0;
 		case loop: {
 			int rv = 0;
 			while (eval_Ast(root->left, context))
@@ -46,7 +51,7 @@ int eval_Ast(AbstractSyntaxTree* root, Context* context) {
 				if(root->left)
 					eval_Ast(root->left, function_scope);
 				function_scope->up = 0;
-				print_Ast(f->tree);
+				//print_Ast(f->tree);
 				return eval_Ast(f->tree, function_scope);
 			}
 			else
@@ -85,7 +90,7 @@ Context* eval_file(char* file) {
 Context* eval_string(char* input, Context* context,char* arguments) {
 	TokenStream tokens = tokenize(input, space_seperated_operators());
 	AbstractSyntaxTree* tree = parse(&tokens, 0,context,context);
-	print_Ast(tree);
+	//print_Ast(tree);
 	int result = eval_Ast(tree, context);
 	if(verbose(arguments))
 		printf("\t%i\n",result);

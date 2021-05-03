@@ -1,6 +1,7 @@
 #include <stdio.h>
 #include <string.h>
 #include "Context.h"
+#include "Operators.h"
 #include "eval.h"
 #include "FileParser.h"
 #include "Parser.h"
@@ -113,13 +114,25 @@ static CCFile* parze(char lines[100][300], int n) {
 				start_of_block = 0;
 			}
 			else {
+				//XXX: reduce stepwise
 				current_tabs = count_tabs(lines[i]);
-				*writer++ = ')';
-				*writer = 0;
-				*writer++ = ',';
-				*writer = 0;
-				writer = strcat(writer, &lines[i][current_tabs]) + strlen(&lines[i][current_tabs]);
-				start_of_block = 0;
+				if (string_to_operator(&lines[i][current_tabs]) == conditional_else)
+				{
+
+					*writer++ = ')';
+					*writer = 0;
+					writer = strcat(writer, &lines[i][current_tabs]) + strlen(&lines[i][current_tabs]);
+
+				}
+				else {
+					*writer++ = ')';
+					*writer = 0;
+					*writer++ = ',';
+					*writer = 0;
+					writer = strcat(writer, &lines[i][current_tabs]) + strlen(&lines[i][current_tabs]);
+					start_of_block = 0;
+				}
+
 			}
 			i++;
 		}

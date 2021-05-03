@@ -18,10 +18,10 @@ static void test_assignment_chained(void) {
 }
 static void test_chained_statments(void) {
 	name_test();
-	char* input = copy_string("x = 0, sum = 0, while (x < 100)(x = x + 1, sum = sum + x)");
+	char* input = copy_string("x = 0, sum = 0, while (x < 100)(x = x + 1, sum = sum + x),while(x>10)(x=x-1)");
 	Context* context = new_context();
 	eval_string(input, context, "");
-	assert(equals_int, get_value(context, "b"), 4);
+	assert(equals_int, get_value(context, "x"), 10);
 }
 static void test_loop(void) {
 	name_test();

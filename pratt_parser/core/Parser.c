@@ -67,16 +67,22 @@ AbstractSyntaxTree* parse_start_of_expression(char* current_token, TokenStream* 
 	}
 	if (string_to_operator(current_token) == conditional)
 	{
-		AbstractSyntaxTree* condition = parse(tokens, 0, context);
-		AbstractSyntaxTree* conditional_epxression = parse(tokens, 3, context);
+		AbstractSyntaxTree* condition = parse(tokens, 1400, context);
+		AbstractSyntaxTree* conditional_epxression = parse(tokens, 1000, context);
+		AbstractSyntaxTree* else_epxression = 0;
+		if (string_to_operator(peek(tokens)) == conditional_else)
+		{
+			next(tokens);
+			else_epxression = parse(tokens, 1000, context);
 
-		return new_Ast(no_left_operand, condition, conditional_epxression, current_token);
+		}
+		return new_Ast(no_left_operand, condition, new_Ast(no_left_operand,conditional_epxression,else_epxression,current_token), current_token);
 	}
 	if (string_to_operator(current_token) == loop)
 	{
-		AbstractSyntaxTree* condition = parse(tokens, 0, context);
+		AbstractSyntaxTree* condition = parse(tokens, 1000, context);
 		
-		AbstractSyntaxTree* conditional_epxression = parse(tokens, 3, context);
+		AbstractSyntaxTree* conditional_epxression = parse(tokens, 1000, context);
 
 		return new_Ast(no_left_operand, condition, conditional_epxression, current_token);
 	}

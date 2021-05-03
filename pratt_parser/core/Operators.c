@@ -23,6 +23,8 @@ void init_representation(void) {
 	representation[and] = "&&";
 	representation[or] = "||";
 	representation[conditional] = "if";
+	representation[conditional_else] = "else";
+	
 	representation[loop] = "while";
 	representation[statement_seperator] = ",";
 

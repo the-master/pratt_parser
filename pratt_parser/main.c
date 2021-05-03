@@ -25,7 +25,7 @@ int main(void) {
 
 
 	prepare_tests();
-//	run_tests();
+	run_tests();
 	//repl();
 	return 1;
 }
