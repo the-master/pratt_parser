@@ -94,7 +94,7 @@ int contains_token(TokenStream all_tokens,char* str) {
  TokenStream tokenise2(TokenStream input, TokenStream tokens) {
 	 TokenStream rv = input;
 	 TokenStream all_tokens = tokens;
-	 for (int i = 5; i > 0; i--) {
+	 for (int i = 6; i > 0; i--) {
 
 
 		  TokenStream my_tokens = filter_by_lenght(tokens,i);

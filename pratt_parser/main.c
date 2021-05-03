@@ -13,7 +13,7 @@ todo:	split tokenicer.c => tokenizer.c & stream.c
 		add 
 		  *types
 		  *array
-		  *function
+		  *function		done
 		  *structs
 		code coverage
 

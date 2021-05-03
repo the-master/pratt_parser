@@ -12,6 +12,8 @@ Context* new_context(void) {
 	rv->values = new_TokenStream();
 	rv->functions = new_function_context();
 	rv->up = 0;
+	rv->alive = 1;
+	rv->result = -333;
 	return rv;
 }
 int get_value(Context* context, char* key) {
@@ -72,4 +74,3 @@ void add_fun(Context* context, char* key, CCFunction* f) {
 CCFunction* get_fun(Context* context, char* key) {
 	return get_function(context->functions, key);
 }
-

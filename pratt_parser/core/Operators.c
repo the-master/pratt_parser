@@ -27,7 +27,8 @@ void init_representation(void) {
 	
 	representation[loop] = "while";
 	representation[statement_seperator] = ",";
-
+	representation[return_statement] = "return";
+	
 }
 void init_binding_pow(void) {
 	binding_pow[left_brace] = -10;

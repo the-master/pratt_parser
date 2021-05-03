@@ -29,6 +29,10 @@ AbstractSyntaxTree* parse_start_of_expression(char* current_token, TokenStream* 
 		discard_closing_brace(tokens);
 		return rv;
 	}
+	if (string_to_operator(current_token) == return_statement) {
+		return new_Ast(no_left_operand, 0, parse(tokens, 0, context), operator_to_string(return_statement));
+	}
+
 	if (is_function_token(current_token)) {
 		if (has_fun(context, current_token))
 		{

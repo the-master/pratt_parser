@@ -6,6 +6,8 @@ typedef struct {
 	TokenStream values;
 	FunctionContext* functions;
 	void* up;
+	int alive;
+	int result;
 }Context;
 
 Context* new_context(void);
