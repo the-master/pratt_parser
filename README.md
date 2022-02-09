@@ -4,10 +4,10 @@
 			return a * fac(a-1)
 		else
 			return 1
-	f()
+	int f()
 		int:x = 4 
 		fac(x)
-	sum(int:a)
+	int sum(int:a)
 		return a +1
-	main()
+	void main()
 		f() + fac(5)
