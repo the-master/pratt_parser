@@ -5,7 +5,7 @@
 		else
 			return 1
 	f()
-		int:x = 4
+		int:x = 4 
 		fac(x)
 	sum(int:a)
 		return a +1
