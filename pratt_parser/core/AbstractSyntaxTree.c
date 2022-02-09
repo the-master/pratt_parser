@@ -5,7 +5,7 @@
 #include "language.h"
 #include "Operators.h"
 #include "util.h"
-AbstractSyntaxTree* new_Ast(typez type, AbstractSyntaxTree* left, AbstractSyntaxTree* right, char* val) {
+AbstractSyntaxTree* new_Ast(ast_type_of_operand type, AbstractSyntaxTree* left, AbstractSyntaxTree* right, char* val) {
 	AbstractSyntaxTree* rv = exit_on_null( malloc(sizeof(AbstractSyntaxTree)));
 	rv->type = type;
 	rv->val = val;
@@ -24,7 +24,7 @@ void print_Ast_recursive(AbstractSyntaxTree* root) {
 	if (root->type == no_left_operand)
 		printf(" %s ", root->val);
 	else {
-		printf(" %s ", operator_to_string((operators)root->val));
+		printf(" %s ", operator_to_string((keywords)root->val));
 	}
 	print_Ast_recursive(root->right);
 	printf("");

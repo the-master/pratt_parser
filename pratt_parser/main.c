@@ -1,12 +1,16 @@
 
+
 #include <stdio.h>
+#include <stdlib.h>
 #include "Operators.h"
 #include "Testing.h"
 #include "TestCollector.h"
 #include "FileParser.h"
 #include "Context.h"
-//allows itoa
 #define _CRT_SECURE_NO_WARNINGS 1
+#define Xabra float
+#include "Source.h"
+//allows itoa
 /*
 todo:	split tokenicer.c => tokenizer.c & stream.c
 
@@ -19,13 +23,13 @@ todo:	split tokenicer.c => tokenizer.c & stream.c
 
 */
 int main(void) {
+	//printf("blub %i \n",f(3,4));
 	init_operator_module();
-	repl2("C:\\Users\\Suus\\Desktop\\Dieter\\muhlang\\blub.cc");
+	repl2("C:\\Users\\joosw\\Desktop\\blub.cc");
 
 
 
 	prepare_tests();
 	run_tests();
-	//repl();
 	return 1;
 }

@@ -115,8 +115,9 @@
     <ClCompile>
       <WarningLevel>Level3</WarningLevel>
       <SDLCheck>true</SDLCheck>
-      <PreprocessorDefinitions>_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>_DEBUG;_CONSOLE;_CRT_SECURE_NO_WARNINGS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
+      <AdditionalIncludeDirectories>C:\Users\joosw\source\repos\pratt_parser\pratt_parser\core\inc;C:\Users\joosw\source\repos\pratt_parser\pratt_parser\core\enums;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -144,6 +145,7 @@
     <ClCompile Include="core\Context.c" />
     <ClCompile Include="core\FileParser.c" />
     <ClCompile Include="core\FunctionContext.c" />
+    <ClCompile Include="Source.h" />
     <ClCompile Include="test\ContextTest.c" />
     <ClCompile Include="core\eval.c" />
     <ClCompile Include="test\ParserTest.c" />

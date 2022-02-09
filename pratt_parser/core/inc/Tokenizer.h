@@ -1,4 +1,10 @@
 #pragma once
+//typedef struct {
+//	char* str;
+//	char* origin;
+//	char*  source;
+//	int len;
+//} Token;
 typedef struct {
 	int pos;
 	int token_count;

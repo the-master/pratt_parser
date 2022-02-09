@@ -1,4 +1,5 @@
 #include <string.h>
+#include <stdlib.h>
 #include "FunctionContext.h"
 #include "Tokenizer.h"
 

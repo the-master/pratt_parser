@@ -7,6 +7,7 @@ typedef struct {
 	int arg_count;
 	char** args;
 	char* expression;
+	char* return_type;
 	AbstractSyntaxTree* tree;
 }CCFunction;
 typedef struct {

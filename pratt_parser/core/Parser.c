@@ -42,26 +42,20 @@ AbstractSyntaxTree* parse_start_of_expression(char* current_token, TokenStream* 
 
 				return new_Ast(no_left_operand, 0, 0, current_token);
 			}
-			AbstractSyntaxTree* acc[2] = { 0 };
+			AbstractSyntaxTree* acc= { 0 };
 			for (int i = 0; i < f->arg_count; i++) {
 				AbstractSyntaxTree* value = parse(tokens, binding_power(","), context);
 				AbstractSyntaxTree* variable = new_Ast(no_left_operand, 0, 0, f->args[i]);
 				AbstractSyntaxTree* assignment=new_Ast(with_left_operand, variable, value, assign);
-				if (acc[0] == 0 && acc[1] ==0)
-					acc[0] = assignment;
-				else if (acc[1]==0) {
-					acc[1] = new_Ast(with_left_operand,acc[0],assignment, statement_seperator);
-				}
+				if (acc == 0 )
+					acc = assignment;
 				else {
-					acc[1] = new_Ast(with_left_operand, acc[1], assignment, statement_seperator);
+					acc = new_Ast(with_left_operand, acc, assignment, statement_seperator);
 				}
 
 				discard_comma_or_brace(tokens);
 			}
-			if(acc[1])	
-				return new_Ast(no_left_operand, acc[1],0, current_token);
-			else
-				return new_Ast(no_left_operand, acc[0], 0, current_token);
+			return acc;
 		}
 
 		AbstractSyntaxTree* rv = new_Ast(no_left_operand, 0, 0, current_token);
@@ -130,7 +124,7 @@ AbstractSyntaxTree* parse_with_left_expression(AbstractSyntaxTree* left, char* v
 AbstractSyntaxTree* parse(TokenStream* tokens, int current_binding_power,Context* context) {
 	if (!has_next(tokens))
 		return 0;
-	if (*peek(tokens) == ")")
+	if (*peek(tokens) == ')')
 		printf("blah");
 	AbstractSyntaxTree* left = parse_start_of_expression(next(tokens), tokens, context);
 

@@ -28,6 +28,7 @@ void init_representation(void) {
 	representation[loop] = "while";
 	representation[statement_seperator] = ",";
 	representation[return_statement] = "return";
+	representation[declaration] = ":";
 	
 }
 void init_binding_pow(void) {
@@ -47,9 +48,10 @@ void init_binding_pow(void) {
 	binding_pow[minus] = 20;
 	binding_pow[multiply] = 30;
 	binding_pow[divide] = 30;
+	binding_pow[declaration] = 40;
 }
 
-operators string_to_operator(char* str) {
+keywords string_to_operator(char* str) {
 
 	for (int i = 0; i < operators_size; i++)
 		if (strcmp(str, representation[i]) == 0)
@@ -57,7 +59,7 @@ operators string_to_operator(char* str) {
 
 	return -1;
 }
-char* operator_to_string(operators op) {
+char* operator_to_string(keywords op) {
 	return representation[op];
 }
 int binding_power(char* arg) {
