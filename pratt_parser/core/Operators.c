@@ -44,7 +44,7 @@ void init_binding_pow(void) {
 	binding_pow[not_equals] = 17;
 	binding_pow[and] = 40;
 	binding_pow[or ] = 35;
-	binding_pow[plus] = 20;
+	binding_pow[plus] = 19;
 	binding_pow[minus] = 20;
 	binding_pow[multiply] = 30;
 	binding_pow[divide] = 30;

@@ -26,10 +26,11 @@ int main(void) {
 	//printf("blub %i \n",f(3,4));
 	init_operator_module();
 	repl2("C:\\Users\\joosw\\Desktop\\blub.cc");
-
+	char* buffer = malloc(100000);
+	//print_to_buffer_as_c_file("C:\\Users\\joosw\\Desktop\\blub.cc", buffer);
 
 
 	prepare_tests();
-	run_tests();
+//	run_tests();
 	return 1;
 }

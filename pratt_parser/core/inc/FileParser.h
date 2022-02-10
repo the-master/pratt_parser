@@ -15,3 +15,5 @@ typedef struct {
 	CCFunction functions[100];
 }CCFile;
 void repl2(char* source_file);
+
+void print_to_buffer_as_c_file(char* source_code,char* buffer);

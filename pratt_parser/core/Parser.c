@@ -23,7 +23,8 @@ void discard_comma_or_brace(TokenStream* tokens) {
 }
 
 AbstractSyntaxTree* parse_start_of_expression(char* current_token, TokenStream* tokens, Context* context) {
-	
+	print_all(*tokens);
+	printf("\n");
 	if (*current_token == '('){
 		AbstractSyntaxTree* rv = parse(tokens, 0, context);
 		discard_closing_brace(tokens);
@@ -37,6 +38,7 @@ AbstractSyntaxTree* parse_start_of_expression(char* current_token, TokenStream* 
 		if (has_fun(context, current_token))
 		{
 			CCFunction* f= get_fun(context, current_token);
+			
 			if (f->arg_count == 0) {
 				discard_closing_brace(tokens);
 
@@ -44,7 +46,7 @@ AbstractSyntaxTree* parse_start_of_expression(char* current_token, TokenStream* 
 			}
 			AbstractSyntaxTree* acc= { 0 };
 			for (int i = 0; i < f->arg_count; i++) {
-				AbstractSyntaxTree* value = parse(tokens, binding_power(","), context);
+				AbstractSyntaxTree* value = parse(tokens, binding_power(",")+1, context);
 				AbstractSyntaxTree* variable = new_Ast(no_left_operand, 0, 0, f->args[i]);
 				AbstractSyntaxTree* assignment=new_Ast(with_left_operand, variable, value, assign);
 				if (acc == 0 )
@@ -53,12 +55,12 @@ AbstractSyntaxTree* parse_start_of_expression(char* current_token, TokenStream* 
 					acc = new_Ast(with_left_operand, acc, assignment, statement_seperator);
 				}
 
-				discard_comma_or_brace(tokens);
+ 				discard_comma_or_brace(tokens);
 			}
-			return acc;
+			return new_Ast(no_left_operand, acc, 0, current_token);
 		}
 
-		AbstractSyntaxTree* rv = new_Ast(no_left_operand, 0, 0, current_token);
+ 		AbstractSyntaxTree* rv = new_Ast(no_left_operand, 0, 0, current_token);
 		//parse(tokens, binding_power("("))
 		discard_closing_brace(tokens);
 		return rv;
@@ -110,7 +112,7 @@ AbstractSyntaxTree* parse_with_left_expression(AbstractSyntaxTree* left, char* v
 	case	statement_seperator:
 	case	operators_size:
 	default:
-		rv = new_Ast(with_left_operand, left, parse(tokens, binding_power, context), (char*)string_to_operator(v));
+ 		rv = new_Ast(with_left_operand, left, parse(tokens, binding_power, context), (char*)string_to_operator(v));
 		break;
 	case conditional:
 		printf(" %s is not supported with %s as left argument.\n", operator_to_string(conditional),left->val);

@@ -28,6 +28,63 @@ typedef struct eval_state {
 	Context* context;
 	//void (*func)(eval_context);
 }eval_state;
+typedef struct {
+	TokenStream arguments_types;
+	char* return_type;
+}expression_type;
+expression_type null_type;
+expression_type int_epxr = { .return_type = "int" };
+expression_type type_of_Ast(AbstractSyntaxTree* root, Context* context) {
+	if (root == 0)
+		return null_type;
+	switch (root->type)
+	{
+	case no_left_operand:
+		switch (string_to_operator(root->val))
+		{
+		case return_statement:
+			return type_of_Ast(root->right, context);
+		case conditional:
+			return null_type;
+		case loop:
+			return null_type;
+		default:
+			if (is_number(root->val))
+				return (expression_type) { .return_type = "int" };
+			else if (is_function_token(root->val)) {
+				TokenStream temp = new_TokenStream();
+
+				expression_type exp = { temp,"int" };
+				return exp;
+			}
+		case with_left_operand:
+			switch ((int)root->val) {
+			case	plus: return int_epxr;
+			case	multiply:  return int_epxr;
+			case	minus: return int_epxr;
+			case	divide:  return int_epxr;
+			case	less:  return int_epxr;
+			case	more:  return int_epxr;
+			case	leq:  return int_epxr;
+			case	geq:  return int_epxr;
+			case	equals: return int_epxr;
+			case	not_equals: return int_epxr;
+			caseand:  return int_epxr;
+			case or :  return int_epxr;
+			case	assign:
+				if (root->left && root->left->val == declaration)
+					return (expression_type) { .return_type = root->left->val };
+				else if (root->left)
+					return type_of_Ast(root->right, context);
+			case	statement_seperator:return type_of_Ast(root->right, context);
+			case	declaration:return null_type;
+			case	operators_size: return null_type;
+			}
+		}
+	}
+	printf("errrr something went terribly wrong\n");
+	return null_type;
+}
 
 void push_state(eval_context* c, eval_state* state) {
 	push(&(c->stack), (char*)state);
@@ -116,6 +173,7 @@ int eval_Ast(AbstractSyntaxTree* root, Context* context) {
 		case return_statement:
 			context->result = eval_Ast(root->right, context);
 			context->alive = 0;
+			return 1;
 		case conditional:
 			if (eval_Ast(root->left, context))
 				return eval_Ast(root->right->left, context);
@@ -136,20 +194,26 @@ int eval_Ast(AbstractSyntaxTree* root, Context* context) {
 				inherit_functions(context, function_scope);
 				CCFunction* f = get_fun(context, root->val);
 				function_scope->up = context;
-				if (root->left) {
+				if (f->arg_count == 1)
+				{
+					set_value(function_scope, root->left->left->val, eval_Ast(root->left->right, context));
+				}
+				else {
 					AbstractSyntaxTree* tr = root->left;
 					do {
-						set_value(function_scope, tr->left->val, eval_Ast(tr->right, context));
+						int temp;
+						print_Ast(root);
+						set_value(function_scope, tr->left->left->val, eval_Ast(tr->left->right, context));
 						tr = tr->right;
 					} while (tr && tr->val == statement_seperator);
 
+					set_value(function_scope, tr->left->val, eval_Ast(tr->right, context));
 				}
-					;
-				function_scope->up = 0;
+			//	function_scope->up = 0;
 				//print_Ast(f->tree);
 				int res= eval_Ast(f->tree, function_scope);
 				if (function_scope->alive)
-					return res;
+					return  res;
 				else
 					return function_scope->result;
 			}
@@ -171,14 +235,16 @@ int eval_Ast(AbstractSyntaxTree* root, Context* context) {
 		case	and:  return eval_Ast(root->left, context) && eval_Ast(root->right, context);
 		case	or:  return eval_Ast(root->left, context) || eval_Ast(root->right, context);
 		case	assign:
-			
+		//	else
+		//return set_value(context, root->left->right->val, eval_Ast(root->right, context))
+		//			if (root->left && root->left->val && !has_key(context, root->left->val)) {
+		//				printf("syntax error: %s does not exist\n", root->left->val);
+		//				exit(-99);
+		////				return -99;
+		//			}
 			if (root->left && root->left->val == declaration)
 				return set_value(context, root->left->right->val, eval_Ast(root->right, context));
-			if (root->left && root->left->val && !has_key(context, root->left->val)) {
-				printf("syntax error: %s does not exist\n", root->left->val);
-				exit(-99);
-//				return -99;
-			}
+
 			else if (root->left)
 				return set_value(context, root->left->val, eval_Ast(root->right, context));
 			else
@@ -192,67 +258,87 @@ int eval_Ast(AbstractSyntaxTree* root, Context* context) {
 	return -1;
 }
 typedef struct { int todo; }VerificationData;
-int Ast_to_c_file(char* output,AbstractSyntaxTree* tree,Context* c) {
-
+void write_tabs(char* output, int indentation_count) {
+	if (*output == 0 || *output == '\n') {
+		for (int i = 0; i < indentation_count; i++)
+			sprintf(output, "\t");
+	}
 }
-typedef struct{
-	TokenStream arguments_types;
-	char* return_type;
-}expression_type;
-expression_type null_type;
-expression_type int_epxr = { .return_type = "int" };
+int Ast_to_c_file(char* output, AbstractSyntaxTree* root, Context* c, int indentation_count);
+void write_symbol(char* output,AbstractSyntaxTree* root, char* symbol, Context* c, int indentation_count) {
+	Ast_to_c_file(output, root->left, c,indentation_count);
+	sprintf(output, "%s", symbol);
+	Ast_to_c_file(output, root->right, c, indentation_count);
+}
+int Ast_to_c_file(char* output,AbstractSyntaxTree* root,Context* c, int indentation_count) {
+	write_tabs(output,indentation_count );
 
-expression_type type_of_Ast(AbstractSyntaxTree* root, Context* context) {
 	if (root == 0)
-		return null_type;
+		return 1;
 	switch (root->type)
 	{
 	case no_left_operand:
 		switch (string_to_operator(root->val))
 		{
 		case return_statement:
-			return type_of_Ast(root->right, context);
+			output += sprintf(output, "return ");
+			Ast_to_c_file(output,root->right,c,indentation_count);
+			return 1; ;
 		case conditional:
-			return null_type;
+			output += sprintf(output, "if( ");
+			Ast_to_c_file(output, root->left, c, indentation_count);
+			output += sprintf(output, ")\{\n");
+			Ast_to_c_file(output, root->right, c, indentation_count);
+			write_tabs(output,indentation_count);
+			output += sprintf(output, "\}\n");
+			return 1;
 		case loop:
-			return null_type;
+
+			output += sprintf(output, "while( ");
+			Ast_to_c_file(output, root->left, c, indentation_count);
+			sprintf(output, ")\{\n");
+			Ast_to_c_file(output, root->right, c, indentation_count);
+			write_tabs(output, indentation_count);
+			sprintf(output, "\}\n");
+			return 1;
 		default:
 			if (is_number(root->val))
-				return (expression_type) { .return_type = "int" };
+				return sprintf(output, "%s",root->val),1;
 			else if (is_function_token(root->val)) {
-				TokenStream temp = new_TokenStream();
+				sprintf(output, "%s", root->val);
 
-				expression_type exp = { temp,"int" };
-
+				return 1;
 			}
 		case with_left_operand:
 			switch ((int)root->val) {
-			case	plus: return int_epxr;
-			case	multiply:  return int_epxr;
-			case	minus: return int_epxr;
-			case	divide:  return int_epxr;
-			case	less:  return int_epxr;
-			case	more:  return int_epxr;
-			case	leq:  return int_epxr;
-			case	geq:  return int_epxr;
-			case	equals: return int_epxr;
-			case	not_equals: return int_epxr;
-			caseand :  return int_epxr;
-			case or :  return int_epxr;
+			case	plus: 
+			case	multiply:  
+			case	minus: 
+			case	divide:  
+			case	less:  
+			case	more:  
+			case	leq:  
+			case	geq: 
+			case	equals: 
+			case	not_equals: 
 			case	assign:
-				if (root->left && root->left->val == declaration)
-					return (expression_type) { .return_type = root->left->val };
-				else if (root->left)
-					return type_of_Ast(root->right, context);
-			case	statement_seperator:return type_of_Ast(root->right, context);
-			case	declaration:return null_type;
-			case	operators_size: return null_type;
+				write_symbol(output, root,c, operator_to_string((int)root->val), indentation_count);
+				return 1;
+			case	statement_seperator:
+				write_symbol(output, root, c, "\;\n", indentation_count);
+				return 1;
+				return 1;
+			case	declaration:
+				write_symbol(output, root, c, " ", indentation_count);
+				return 1;
+			case	operators_size: return 0;
 			}
 		}
 	}
 	printf("errrr something went terribly wrong\n");
-	return null_type;
+	return 0;
 }
+
 
 
 

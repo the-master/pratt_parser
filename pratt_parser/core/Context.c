@@ -17,8 +17,8 @@ Context* new_context(void) {
 	return rv;
 }
 int get_value(Context* context, char* key) {
-	if (context->up)
-		return get_value((Context*)context->up, key);
+	//if (context->up)
+	//	return get_value((Context*)context->up, key);
 	//printf("lookiing up  %s :\n", key);
 	TokenStream keys = context->keys;
 	TokenStream values = context->values;

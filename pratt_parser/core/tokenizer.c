@@ -48,7 +48,7 @@ TokenStream tokenise(char* source) {
 }
 void print_all(TokenStream tokens) {
 	while (has_next(&tokens))
-		printf("%s, ",next(&tokens));
+		printf("%s\t",next(&tokens));
 }
 int contains_token(TokenStream all_tokens,char* str) {
 	while (has_next(&all_tokens)) {
@@ -101,7 +101,7 @@ int contains_token(TokenStream all_tokens,char* str) {
 		 while (has_next(&my_tokens)) {
 			 //print_all(rv),printf("\n");
 			 rv = tokenize_by(rv, next(&my_tokens), 0, all_tokens);
-			 /* printf("\n");
+			/*  printf("\n");
 			  print_all(rv), printf("\n");*/
 		 }
 	 }
@@ -113,14 +113,15 @@ int contains_token(TokenStream all_tokens,char* str) {
  }
  TokenStream stitch_minus(TokenStream tokenized,TokenStream all_tokens) {
 	 TokenStream rv = new_TokenStream();
-	 char* prev = 0;
+	 char* prev = 0; 
 	 while (has_next(&tokenized)){
 		 char* current = next(&tokenized);
 		 if (current == 0) {
 			 printf("\n something unexpected happened during tokenization\n");
 			continue;
 		 }
-		 if (strcmp(current, "-") == 0 && (prev == 0 || contains_token(all_tokens, prev))) {
+		 if (strcmp(current, "-") == 0 && (prev == 0 || *prev == '*' || *prev == '+' || *prev == '-' || *prev == '/')) {
+			 
 			 char* next_token = next(&tokenized);
 			 char buff[100];
 			 buff[0] = 0;
@@ -163,7 +164,6 @@ int contains_token(TokenStream all_tokens,char* str) {
 	 push(&temp, input);
 
 	 temp = scrub_spaces(temp);
-
 	 TokenStream tokens = tokenise(tokens_string);
 	 TokenStream tokenized= tokenise2(temp, tokens);
 	 return stitch_function_brace(stitch_minus(tokenized, tokens) , tokens);

@@ -84,6 +84,7 @@ int count_args(char* name) {
 }
 static CCFile* parse_single_file(char lines[100][300], int n) {
 	CCFile* file = malloc(sizeof(CCFile));
+	*file = (CCFile){ 0 };
 	Context* context = new_context();
 	file->i = 0;
 	char* parsed = malloc(20000);
@@ -173,14 +174,14 @@ static CCFile* parse_single_file(char lines[100][300], int n) {
 		}
 			
 		add_function(file, name, copy_string(parsed),argc,args,return_type);
-		add_fun(context, name, &file->functions[file->i - 1]);
+		add_fun(context, name, &file->functions[file->i-1 ]);
 	}
 
 	for (int i = 0; i < file->i; i++) {
 
 		TokenStream tokens = tokenize(file->functions[i].expression, space_seperated_operators());
-
-		file->functions[i].tree = parse(&tokens, 0,context);
+		AbstractSyntaxTree* tree=parse(&tokens, 0, context);
+		file->functions[i].tree =tree;
 
 	}
 	return file;
@@ -212,11 +213,28 @@ void repl2(char* source_code) {
 	CCFile* file = parse_single_file(&content, line);
 	Context* context = new_context();
 	for (int i = 0; i < file->i; i++)
-		add_fun(context, file->functions[i].name, &file->functions[i]);
+		add_fun(context, file->functions[i].name, &(file->functions[i]));
 
 	if (main_f(file))
 		printf("blah\t%i\n", eval_Ast(main_f(file), context));
 	else
 		printf("no main defined in:\n %s\n",source_code);
 
+}
+
+void print_to_buffer_as_c_file(char* source_code,char* buffer) {
+
+	char content[100][300];
+	int line = read_file(source_code, content);
+
+	line = line - remove_comments(content, line);
+
+	CCFile* file = parse_single_file(&content, line);
+	Context* context = new_context();
+	for (int i = 0; i < file->i; i++)
+		add_fun(context, file->functions[i].name, &file->functions[i]);
+
+	for (int i = 0; i < file->i; i++)
+		Ast_to_c_file(buffer,  file->functions[i].tree,context ,0);
+	printf("%s", buffer);
 }
