@@ -8,6 +8,8 @@
 #include "Parser.h"
 #include "util.h"
 #include "Tokenizer.h"
+
+
 static int remove_comments(char content[100][300], int n) {
 	int count = 0;
 	for (int i = 0; i < n; i++)
@@ -39,11 +41,12 @@ DONE:;
 }
 
 
-static void add_function(CCFile* file, char* name, char* expression, int argc, char** args, char* return_type) {
+static void add_function(CCFile* file, char* name, char* expression, int argc, char** args,char** args_type ,char* return_type) {
 	file->functions[file->i].name = name;
 	file->functions[file->i].expression = expression;
 	file->functions[file->i].arg_count = argc;
 	file->functions[file->i].args = args;
+	file->functions[file->i].args_type = args_type;
 	file->functions[file->i].return_type = return_type;
 	file->i++;
 }
@@ -82,7 +85,19 @@ int count_args(char* name) {
 	return comma_count + 1;
 
 }
-static CCFile* parse_single_file(char lines[100][300], int n) {
+int is_only_whitespace(char* str) {
+	while (*str)
+	{
+		if (*str == '\t' || *str == '\n' || *str == '\r' || *str == ' ')
+			str++;
+		else 
+			return 0;
+	}
+	return 1;
+}
+
+static CCFile* parse_single_file(char lines[200][300], int n) {
+	
 	CCFile* file = malloc(sizeof(CCFile));
 	*file = (CCFile){ 0 };
 	Context* context = new_context();
@@ -100,6 +115,7 @@ static CCFile* parse_single_file(char lines[100][300], int n) {
 
 		while (i < n && lines[i][0] == '\t')
 		{
+			
 			remove_new_line(lines[i]);
 			if (current_tabs == count_tabs(lines[i]))
 			{
@@ -146,21 +162,39 @@ static CCFile* parse_single_file(char lines[100][300], int n) {
 		remove_new_line(name);
 		int argc =count_args(name);
 		char** args = malloc(50 * sizeof(char*));
+		char** args_type = malloc(50 * sizeof(char*));
 		char* start = strstr(name, "(") + 1;
 		char* seek = start;
 		char* end = strstr(name, ")");
 		for (int i = 0; i < argc-1; i++) {
-			if(strstr(seek, ":"))
-				seek = strstr(seek, ":")+1;
+			if (strstr(seek, ":")) {
+				char* temp_type = seek;
+				while (*temp_type == ' ') temp_type++;
+				seek = strstr(seek, ":");
+				*seek = 0; 
+				args_type[i] = copy_string(temp_type);
+				*seek++;
+
+			}
 			char* comma_location = strstr(seek, ",");
 			*comma_location = 0;
 			args[i]=copy_string(seek);
 			seek = comma_location + 1;
 		}
 		*end = 0;
-		if (strstr(seek, ":"))
-			seek = strstr(seek, ":") + 1;
- 		args[argc - 1] = copy_string(seek);
+		char* temp_type="";
+		if (strstr(seek, ":")) {
+			temp_type = seek;
+			while (*temp_type == ' ') temp_type++;
+			seek = strstr(seek, ":");
+			*seek = 0;
+			*seek++;
+
+		}
+		if (argc) {
+			args[argc - 1] = copy_string(seek);
+			args_type[argc - 1] = copy_string(temp_type);
+		}
 		*start = 0;
 
 		//remove_closing_brace(name);
@@ -173,7 +207,7 @@ static CCFile* parse_single_file(char lines[100][300], int n) {
 			name = space + 1;
 		}
 			
-		add_function(file, name, copy_string(parsed),argc,args,return_type);
+		add_function(file, name, copy_string(parsed),argc,args,args_type,return_type);
 		add_fun(context, name, &file->functions[file->i-1 ]);
 	}
 
@@ -195,11 +229,12 @@ FunctionContext* function_context_from_file(CCFile* file) {
 static int read_file(char* source_code,char content[200][300]) {
 	FILE* source_file = fopen(source_code, "r");
 	if (source_file == 0)
-		return printf("%s \t:no such file");
+		return printf("%s \t:no such file",source_code);
 	char current;
 	int lines_read = 0;
 	while (fgets(content[lines_read++], 300, source_file) != 0)
-		;
+		if(printf("%s", content[lines_read - 1]), is_only_whitespace(content[lines_read - 1]))
+			lines_read--;
 	lines_read--;
 	return lines_read;
 }
@@ -215,8 +250,13 @@ void repl2(char* source_code) {
 	for (int i = 0; i < file->i; i++)
 		add_fun(context, file->functions[i].name, &(file->functions[i]));
 
-	if (main_f(file))
-		printf("blah\t%i\n", eval_Ast(main_f(file), context));
+	if (main_f(file)) {
+		value_container v = eval_Ast_temp(main_f(file), context);
+		if(v.type == float_b)
+			printf("result:\t%f\n", v.f);
+		else
+			printf("result:\t%i\n", v.i);
+	}
 	else
 		printf("no main defined in:\n %s\n",source_code);
 
@@ -233,8 +273,22 @@ void print_to_buffer_as_c_file(char* source_code,char* buffer) {
 	Context* context = new_context();
 	for (int i = 0; i < file->i; i++)
 		add_fun(context, file->functions[i].name, &file->functions[i]);
+	char* write = buffer;
+	for (int i = 0; i < file->i; i++) {
 
-	for (int i = 0; i < file->i; i++)
-		Ast_to_c_file(buffer,  file->functions[i].tree,context ,0);
-	printf("%s", buffer);
+		write += sprintf(write,"%s %s",file->functions[i].return_type, file->functions[i].name);
+
+		for (int j = 0; j < file->functions[i].arg_count; j++) {
+			write += sprintf(write,"%s %s,",file->functions[i].args_type[j], file->functions[i].args[j]);
+		}
+		if(file->functions[i].arg_count==0)
+			write += sprintf(write, "void,");
+		write--;
+		*write = 0;
+		write += sprintf(write,") {\n");
+
+		write+= Ast_to_c_file(write,  file->functions[i].tree,context ,1,0);
+		write += sprintf(write,"}\n");
+	}
+	//printf("%s", buffer);
 }

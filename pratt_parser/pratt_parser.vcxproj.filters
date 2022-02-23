@@ -90,6 +90,9 @@
     <ClCompile Include="Source.h">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="core\basetype_operators.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="core\inc\AbstractSyntaxTree.h">
@@ -129,6 +132,9 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="core\inc\FileParser.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="core\inc\basetype_operators.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

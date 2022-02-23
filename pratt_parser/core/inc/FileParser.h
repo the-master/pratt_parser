@@ -6,6 +6,7 @@ typedef struct {
 	char* name;
 	int arg_count;
 	char** args;
+	char** args_type;
 	char* expression;
 	char* return_type;
 	AbstractSyntaxTree* tree;

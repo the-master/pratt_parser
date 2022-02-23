@@ -142,6 +142,9 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="core\AbstractSyntaxTree.c" />
+    <ClCompile Include="core\basetype_operators.c">
+      <SubType>Code</SubType>
+    </ClCompile>
     <ClCompile Include="core\Context.c" />
     <ClCompile Include="core\FileParser.c" />
     <ClCompile Include="core\FunctionContext.c" />
@@ -162,6 +165,9 @@
     <ClCompile Include="test\utilTest.c" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="core\inc\basetype_operators.h">
+      <SubType>Code</SubType>
+    </ClInclude>
     <ClInclude Include="core\inc\AbstractSyntaxTree.h" />
     <ClInclude Include="core\inc\Context.h" />
     <ClInclude Include="core\inc\eval.h" />

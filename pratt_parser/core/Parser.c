@@ -124,10 +124,13 @@ AbstractSyntaxTree* parse_with_left_expression(AbstractSyntaxTree* left, char* v
 }
 
 AbstractSyntaxTree* parse(TokenStream* tokens, int current_binding_power,Context* context) {
+
 	if (!has_next(tokens))
 		return 0;
+
 	if (*peek(tokens) == ')')
-		printf("blah");
+		printf("blssah");
+
 	AbstractSyntaxTree* left = parse_start_of_expression(next(tokens), tokens, context);
 
 	while (has_next(tokens) && binding_power(peek(tokens)) >= current_binding_power)

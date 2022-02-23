@@ -1,6 +1,7 @@
 #pragma once
 #include "Tokenizer.h"
 #include "FunctionContext.h"
+#include "basetype_operators.h"
 typedef struct {
 	TokenStream keys;
 	TokenStream values;

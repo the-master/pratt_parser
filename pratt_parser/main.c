@@ -22,15 +22,16 @@ todo:	split tokenicer.c => tokenizer.c & stream.c
 		code coverage
 
 */
+#include "basetype_operators.h"
 int main(void) {
 	//printf("blub %i \n",f(3,4));
 	init_operator_module();
 	repl2("C:\\Users\\joosw\\Desktop\\blub.cc");
-	char* buffer = malloc(100000);
-	//print_to_buffer_as_c_file("C:\\Users\\joosw\\Desktop\\blub.cc", buffer);
-
-
-	prepare_tests();
+	//char* buffer = malloc(100000);
+	//print_to_buffer_as_c_file("C:\\Users\\joosw\\Desktop\\blub2.cc", buffer);
+	//printf("%s", buffer);
+	//generate();
+	//prepare_tests();
 //	run_tests();
 	return 1;
 }

@@ -26,7 +26,7 @@ int get_value(Context* context, char* key) {
 		char* current_key = next(&keys);
 		next(&values);
 		if (strcmp(key, current_key) == 0)
-			return (int)values.tokens[values.pos - 1];
+ 			return (int)values.tokens[values.pos - 1];
 	}
 	//print_context(context);
 	return -420;
