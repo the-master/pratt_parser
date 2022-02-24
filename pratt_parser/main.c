@@ -30,7 +30,7 @@ int main(void) {
 	//char* buffer = malloc(100000);
 	//print_to_buffer_as_c_file("C:\\Users\\joosw\\Desktop\\blub2.cc", buffer);
 	//printf("%s", buffer);
-	//generate();
+	generate("C:\\Users\\joosw\\Desktop\\generated_c.txt");
 	//prepare_tests();
 //	run_tests();
 	return 1;

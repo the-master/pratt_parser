@@ -1,9 +1,11 @@
-#include "basetype_operators.h"
+
+#include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#include "basetype_operators.h"
 #include "Operators.h"
 #include "util.h"
-#include <stdio.h>
+#include "Tokenizer.h"
 typedef enum { plus_b, multiply_b, divide_b, equals_b,minus_b,less_b,more_b,leq_b,geq_b,not_equals_b,and_b,or_b,base_operations_size } base_operations;
 value_container plus_int_int(value_container v1, value_container v2) { return (value_container) { int_b, .i = v1.i + v2.i }; }
 value_container plus_int_float(value_container v1, value_container v2) { return (value_container) { int_b, .i = v1.i + v2.f }; }
@@ -168,9 +170,10 @@ value_container operate(value_container v1, value_container v2, keywords keyword
 	return all_operations[v1.type][v2.type][op](v1, v2);
 }
 
-void generate(void) {
+void generate(char* target) {
+	FILE* file = fopen(target, "a");
 
-	char* base_key[base_types_size] = { ".i",".f" };
+	char* base_key[base_types_size] = { ".i",".f"};
 	TokenStream result = new_TokenStream();
 
 	for (int OP = 0; OP < base_operations_size; OP++)
@@ -190,7 +193,7 @@ void generate(void) {
 				push(&result, str);
 			}
 	while (has_next(&result))
-		printf("%s", next(&result));
+		fprintf(file,"%s", next(&result));
 
 	result = new_TokenStream();
 	push(&result, copy_string("value_container (*all_operations[base_types_size][base_types_size][base_operations_size])(value_container, value_container)= {\n"));
@@ -198,7 +201,7 @@ void generate(void) {
 	for (int OP = 0; OP < base_operations_size; OP++)
 		for (int T1 = 0; T1 < base_types_size; T1++)
 			for (int T2 = 0; T2 < base_types_size; T2++) {
-				 char* str = malloc(200);
+				char* str = malloc(200);
 				sprintf(str,
 					"\t[%s_b] [%s_b] [%s_b] = %s_%s_%s,\n",
 					base_type_to_string[T1],
@@ -209,10 +212,51 @@ void generate(void) {
 					base_type_to_string[T2]);
 				push(&result, str);
 			}
-	push(&result,copy_string("};\n"));
+	push(&result, copy_string("};\n")); 
 	while (has_next(&result))
-		printf("%s", next(&result));
+		fprintf(file, "%s", next(&result));
+	result = new_TokenStream();
+
+		for (int T1 = 0; T1 < base_types_size; T1++)
+			for (int T2 = 0; T2 < base_types_size; T2 ++) {
+				if (T1 == T2)
+					continue;
+				char* str = malloc(200);
+				sprintf(str,
+					"value_container cast_%s_%s(value_container v1) { return (value_container) { %s_b, %s = v1%s  }; }\n",
+					base_type_to_string[T1],
+					base_type_to_string[T2],
+					base_type_to_string[T2],
+					base_key[T2],
+					base_key[T1]);
+				push(&result, str);
+			}
+	push(&result, copy_string("};\n"));
 
 
+	while (has_next(&result))
+		fprintf(file, "%s", next(&result));
+	result = new_TokenStream();
+	push(&result, copy_string("value_container (*cast_operation[base_types_size][base_types_size])(value_container)= {\n"));
+
+	
+		for (int T1 = 0; T1 < base_types_size; T1++)
+			for (int T2 = 0; T2 < base_types_size; T2 ++) {
+				if (T1 == T2)
+					continue;
+				char* str = malloc(200);
+				sprintf(str,
+					"\t[%s_b] [%s_b] = cast_%s_%s,\n",
+					base_type_to_string[T1],
+					base_type_to_string[T2],
+					base_type_to_string[T1],
+					base_type_to_string[T2]);
+				push(&result, str);
+			}
+	push(&result, copy_string("};\n"));
+	while (has_next(&result))
+		fprintf(file, "%s", next(&result));
+
+	fclose(file);
 
 }
