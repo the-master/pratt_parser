@@ -11,3 +11,4 @@ char* space_seperated_operators(void);
 char* operator_to_string(keywords op);
 
 keywords string_to_operator(char* str);
+int is_operator(char*  op);

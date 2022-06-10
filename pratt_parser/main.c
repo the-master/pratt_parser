@@ -17,7 +17,6 @@ todo:	split tokenicer.c => tokenizer.c & stream.c
 		add 
 		  *types
 		  *array
-		  *function		done
 		  *structs
 		code coverage
 
@@ -26,7 +25,7 @@ todo:	split tokenicer.c => tokenizer.c & stream.c
 int main(void) {
 	//printf("blub %i \n",f(3,4));
 	init_operator_module();
-	repl2("C:\\Users\\joosw\\Desktop\\blub.cc");
+	repl2("C:\\Users\\joosw\\Desktop\\blub2.cc");
 	//char* buffer = malloc(100000);
 	//print_to_buffer_as_c_file("C:\\Users\\joosw\\Desktop\\blub2.cc", buffer);
 	//printf("%s", buffer);

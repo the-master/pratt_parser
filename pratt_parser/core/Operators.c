@@ -29,6 +29,10 @@ void init_representation(void) {
 	representation[statement_seperator] = ",";
 	representation[return_statement] = "return";
 	representation[declaration] = ":";
+	representation[array_declaration_l] = "[";
+	representation[array_declaration_r] = "]";
+	representation[brace_constructor_l] = "{";
+	representation[brace_constructor_r] = "}";
 	
 }
 void init_binding_pow(void) {
@@ -65,6 +69,13 @@ char* operator_to_string(keywords op) {
 int binding_power(char* arg) {
 	return binding_pow[string_to_operator(arg)];
 
+}
+int is_operator(char* str) {
+	int op;
+	if ((op = string_to_operator(str)) == -1)
+		return 0;
+
+	return binding_pow[op] != 0;
 }
 static int strlen_comparator(char* a, char* b) {
 	return strlen(a) - strlen(b);

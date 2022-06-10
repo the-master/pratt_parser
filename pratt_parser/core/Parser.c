@@ -6,6 +6,11 @@
 #include <string.h>
 #include "Parser.h"
 #include "Context.h"
+int discard_if_token_matches(TokenStream* tokens,char * token) {
+	
+	if (strcmp(peek(tokens),token)== 0 )
+		next(tokens);
+}
 void discard_closing_brace(TokenStream* tokens) {
 	if (*peek(tokens) != ')')
 		printf("no closing brace found someting went wrong parsing");
@@ -21,13 +26,40 @@ void discard_comma_or_brace(TokenStream* tokens) {
 	else
 		printf("discarding comma for function arguments went wrong\n");
 }
-
+array sequense_to_array(AbstractSyntaxTree* tree) {
+	array arr = {0};
+	return arr;
+}
 AbstractSyntaxTree* parse_start_of_expression(char* current_token, TokenStream* tokens, Context* context) {
 	print_all(*tokens);
 	printf("\n");
-	if (*current_token == '('){
+	if (*current_token == '(') {
 		AbstractSyntaxTree* rv = parse(tokens, 0, context);
 		discard_closing_brace(tokens);
+		return rv;
+	}
+	if (*current_token == '[') {
+		print_all(*tokens);
+		AbstractSyntaxTree* number = parse(tokens, 0, context);
+		if (*peek(tokens) != ']' ) {
+			AbstractSyntaxTree* type = parse(tokens, 0, context);
+			if (has_next(tokens) && *peek(tokens) == ']') {
+				next(tokens);
+				//array declaration
+				return new_Ast(with_left_operand,number,type,statement_seperator);
+			}
+			
+		}
+		else {
+		//things 
+			printf("[] went wrong\n"); 
+		}
+		//return rv;
+	}
+	if (*current_token == '{') {
+		AbstractSyntaxTree* rv = parse(tokens, 0, context);
+		value_container v = (value_container){array_a,.arr= sequense_to_array(rv)};
+		discard_if_token_matches(tokens,"}");
 		return rv;
 	}
 	if (string_to_operator(current_token) == return_statement) {
@@ -118,7 +150,8 @@ AbstractSyntaxTree* parse_with_left_expression(AbstractSyntaxTree* left, char* v
 		printf(" %s is not supported with %s as left argument.\n", operator_to_string(conditional),left->val);
 		rv = 0;
 		break;
-
+	case array_declaration_l:
+		rv =new_Ast(with_left_operand, left, parse(tokens, binding_power, context), (char*)string_to_operator(v));
 	}
 	return rv;
 }
@@ -133,7 +166,7 @@ AbstractSyntaxTree* parse(TokenStream* tokens, int current_binding_power,Context
 
 	AbstractSyntaxTree* left = parse_start_of_expression(next(tokens), tokens, context);
 
-	while (has_next(tokens) && binding_power(peek(tokens)) >= current_binding_power)
+	while (has_next(tokens) && binding_power(peek(tokens)) >= current_binding_power && is_operator(peek(tokens)))
 		left = parse_with_left_expression(left, next(tokens), tokens, binding_power(peek(tokens)), context);
 
 	return left;
